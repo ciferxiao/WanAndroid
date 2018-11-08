@@ -14,5 +14,6 @@
         <item name="android:drawablePadding">3dp</item>
     </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
 </resources>

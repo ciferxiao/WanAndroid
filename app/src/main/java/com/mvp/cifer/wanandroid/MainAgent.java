@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.widget.RadioButton;
 
 import com.mvp.cifer.wanandroid.home.HomeFragment;
+import com.mvp.cifer.wanandroid.knowledge.KnowledgeFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,7 @@ public class MainAgent extends FragmentActivity implements ViewPager.OnPageChang
     private void init(){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(HomeFragment.newInstance());
-
+        adapter.addFragment(KnowledgeFragment.newInstance());
         viewPager.setAdapter(adapter);
 
         viewPager.addOnPageChangeListener(this);

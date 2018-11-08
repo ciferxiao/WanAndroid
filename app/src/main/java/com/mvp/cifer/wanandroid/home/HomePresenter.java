@@ -56,7 +56,6 @@ public class HomePresenter extends BasePresenter<HomeContract.IHomeView> impleme
 
                     getView().setBasicData(lists,false);
 
-
                 }else{
                     getView().showToast(homeBean.getErrorMsg());
                 }

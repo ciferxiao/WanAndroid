@@ -1,60 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical">
 
-
-
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/cl_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/transparent">
-
-
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/applayout"
-        android:background="@color/transparent">
-
-    <android.support.design.widget.CollapsingToolbarLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/transparent"
-        app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-        <com.youth.banner.Banner
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/applayout"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:id="@+id/banner"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-    </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
-
-        <com.scwang.smartrefresh.layout.SmartRefreshLayout
-            android:id="@+id/refresh_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toBottomOf="@+id/applayout">
-
-            <com.scwang.smartrefresh.header.PhoenixHeader
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <android.support.v7.widget.RecyclerView
+            android:layout_height="wrap_content"
+            android:background="@color/transparent">
+<!--            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/cl_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/recyclelist"/>
+                app:layout_scrollFlags="scroll"
+                android:background="@color/transparent">-->
 
-            <com.scwang.smartrefresh.header.TaurusHeader
+            <com.youth.banner.Banner
+                android:id="@+id/banner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+                android:layout_height="@dimen/dp_150"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:layout_constraintTop_toTopOf="@+id/parent" />
 
-    </android.support.design.widget.CoordinatorLayout>
+         <!--   </android.support.design.widget.CollapsingToolbarLayout>-->
+        </android.support.design.widget.AppBarLayout>
 
-</LinearLayout>
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <com.scwang.smartrefresh.header.PhoenixHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclelist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.scwang.smartrefresh.header.TaurusHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>

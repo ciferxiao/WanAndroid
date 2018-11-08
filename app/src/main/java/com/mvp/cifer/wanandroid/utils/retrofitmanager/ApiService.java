@@ -3,6 +3,7 @@ package com.mvp.cifer.wanandroid.utils.retrofitmanager;
 import com.mvp.cifer.wanandroid.Login.retrofit.LoginBean;
 import com.mvp.cifer.wanandroid.home.bean.HomeBannerBean;
 import com.mvp.cifer.wanandroid.home.bean.HomeBean;
+import com.mvp.cifer.wanandroid.knowledge.bean.Knowledgebean;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
@@ -33,6 +34,12 @@ public interface ApiService {
 
     @GET("article/list/{page}/json")//http://www.wanandroid.com/article/list/0/json
     Observable<HomeBean> getHomeArticle(@Path("page") int page);
+
+    @GET("tree/json")
+    Observable<Knowledgebean> getKnowledgeList();
+
+    @GET("article/list/0/json")//http://www.wanandroid.com/article/list/0/json?cid=60
+    Observable<Knowledgebean> getKnowledgePart(@Query("cid") int page);
 
 
 }

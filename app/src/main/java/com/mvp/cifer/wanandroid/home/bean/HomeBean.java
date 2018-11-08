@@ -99,6 +99,16 @@ public class HomeBean  extends BaseBean{
 
             private int zan;
 
+            private String superChapterName;
+
+            public String getSuperChapterName() {
+                return superChapterName;
+            }
+
+            public void setSuperChapterName(String superChapterName) {
+                this.superChapterName = superChapterName;
+            }
+
             public String getAuthor() {
                 return author;
             }

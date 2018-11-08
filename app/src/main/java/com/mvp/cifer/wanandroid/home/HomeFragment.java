@@ -1,5 +1,6 @@
 package com.mvp.cifer.wanandroid.home;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,9 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.mvp.cifer.wanandroid.MyWebViewActivity;
 import com.mvp.cifer.wanandroid.R;
+import com.mvp.cifer.wanandroid.adapter.RecycleViewAdapter;
 import com.mvp.cifer.wanandroid.basemvp.BaseMVPFragment;
 import com.mvp.cifer.wanandroid.basemvp.HttpConstants;
+import com.mvp.cifer.wanandroid.basemvp.OnItemClickListener;
 import com.mvp.cifer.wanandroid.home.bean.ArticleBean;
 import com.mvp.cifer.wanandroid.home.bean.HomeBean;
 import com.mvp.cifer.wanandroid.utils.BusMessageEvent;
@@ -45,7 +49,8 @@ import butterknife.ButterKnife;
  * - @time   :  10:39
  * - @desc   :
  */
-public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePresenter> implements HomeContract.IHomeView,OnBannerListener{
+public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePresenter> implements HomeContract.IHomeView
+                            ,OnBannerListener,OnItemClickListener<HomeBean.DataBean.ArticleBean>{
 
     @BindView(R.id.banner)
     Banner banner;
@@ -98,11 +103,14 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePr
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
         recyclerView.setAdapter(adapter);
 
+        adapter.setOnItemClickListener(this);
+
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 pagenumber = 0;
                 getPresenter().getListData(pagenumber,true);
+                Log.d("xiao111"," onRefresh ==" + pagenumber);
                 refreshLayout.finishRefresh(1000);
             }
         });
@@ -110,9 +118,8 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePr
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                pagenumber++;
                 getPresenter().getListData(pagenumber,false);
-                refreshLayout.finishRefresh(1000);
+                refreshLayout.finishRefresh(1000);Log.d("xiao111"," onLoadMore ==" + pagenumber);
             }
         });
 
@@ -127,6 +134,12 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePr
         getPresenter().getListData(pagenumber,true);
     }
 
+    @Override
+    public void onClick(HomeBean.DataBean.ArticleBean articleBean, int position) {
+        Intent intent = new Intent(getActivity(), MyWebViewActivity.class);
+        intent.putExtra("article_url",articleBean.getLink());
+        startActivity(intent);
+    }
 
     @Override
     public void setBasicData(List<HomeBean.DataBean.ArticleBean> houseItems, boolean isRefresh) {
@@ -134,10 +147,12 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePr
             pagenumber = HttpConstants.COMMON_LIST_PAGE_FIRST_NO;
             adapter.clear();
         }
-        Log.d("xiao111"," houseItems.get(1).getTitle();" + houseItems.get(1).getTitle());
+
+        Log.d("xiao111"," getpages ==" + pagenumber);
         adapter.addAll(houseItems);
         adapter.notifyDataSetChanged();
         pagenumber++;
+        refreshLayout.finishLoadMore();
     }
 
     @Override

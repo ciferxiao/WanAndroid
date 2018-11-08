@@ -24,6 +24,9 @@
 
         <activity android:name=".MainAgent"/>
 
+        <activity android:name=".MyWebViewActivity"/>
+
+        <activity android:name=".knowledgePart.KnowPartActivity"/>
     </application>
 
 </manifest>
