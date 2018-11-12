@@ -1,5 +1,6 @@
 package com.mvp.cifer.wanandroid.knowledge;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,7 +21,9 @@ import com.mvp.cifer.wanandroid.basemvp.BasePresenter;
 import com.mvp.cifer.wanandroid.basemvp.BaseView;
 import com.mvp.cifer.wanandroid.basemvp.OnItemClickListener;
 import com.mvp.cifer.wanandroid.knowledge.bean.Knowledgebean;
+import com.mvp.cifer.wanandroid.knowledgePart.KnowPartActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -73,10 +76,23 @@ public class KnowledgeFragment extends BaseMVPFragment<KnowledgeContract.Knowled
     }
 
     @Override
-    public void onClick(Knowledgebean.DataBean o, int position) {
+    public void onClick(Knowledgebean.DataBean dataBean, int position) {
         Log.d("xiao111"," position--" + position);
-        
+        ArrayList<Integer> idlist =new ArrayList<>();
+        ArrayList<String> subtitle = new ArrayList<>();
 
+        List<Knowledgebean.DataBean.ChildrenBean> childrenBeans = dataBean.getChildren();
+
+        for (Knowledgebean.DataBean.ChildrenBean bean : childrenBeans){
+            idlist.add(bean.getId());
+            subtitle.add(bean.getName());
+        }
+
+        Intent intent = new Intent(getActivity(), KnowPartActivity.class);
+        intent.putStringArrayListExtra("TITLE", subtitle);
+        intent.putIntegerArrayListExtra("ID",idlist);
+
+        startActivity(intent);
     }
 
     @Override

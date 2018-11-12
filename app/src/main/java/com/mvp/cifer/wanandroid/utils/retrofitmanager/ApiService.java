@@ -4,6 +4,7 @@ import com.mvp.cifer.wanandroid.Login.retrofit.LoginBean;
 import com.mvp.cifer.wanandroid.home.bean.HomeBannerBean;
 import com.mvp.cifer.wanandroid.home.bean.HomeBean;
 import com.mvp.cifer.wanandroid.knowledge.bean.Knowledgebean;
+import com.mvp.cifer.wanandroid.knowledgePart.PartBean;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
@@ -39,7 +40,7 @@ public interface ApiService {
     Observable<Knowledgebean> getKnowledgeList();
 
     @GET("article/list/0/json")//http://www.wanandroid.com/article/list/0/json?cid=60
-    Observable<Knowledgebean> getKnowledgePart(@Query("cid") int page);
+    Observable<PartBean> getKnowledgePart(@Query("cid") int page);
 
 
 }

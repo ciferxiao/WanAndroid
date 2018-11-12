@@ -29,7 +29,6 @@ public class KnowledgePresenter extends BasePresenter<KnowledgeContract.Knowledg
             public void Success(Knowledgebean knowledgebean) {
                 if (knowledgebean.getErrorCode() == 0){
 
-                    Log.d("xiao111"," aaaaaaaaaaaaa");
                     getView().setListData(knowledgebean.getData());
                 }else{
                     //TODO

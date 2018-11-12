@@ -10,12 +10,13 @@ import com.mvp.cifer.wanandroid.basemvp.BaseView;
  */
 public class KnowPartContract {
     interface KnowPartView extends BaseView{
+        void setListData(PartBean.DataBean dataBeans);
 
-
+        void loading();
     }
 
     interface KnowPartPresneterInterface{
-
+        void getListData(int id);
     }
 
 }
