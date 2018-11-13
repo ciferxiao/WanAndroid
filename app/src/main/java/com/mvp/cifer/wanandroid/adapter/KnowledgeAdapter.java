@@ -11,6 +11,8 @@ import com.mvp.cifer.wanandroid.R;
 import com.mvp.cifer.wanandroid.basemvp.BaseRecyclerViewAdapter;
 import com.mvp.cifer.wanandroid.basemvp.BaseRecyclerViewHolder;
 import com.mvp.cifer.wanandroid.knowledge.bean.Knowledgebean;
+import com.mvp.cifer.wanandroid.utils.CommonUtil;
+import com.mvp.cifer.wanandroid.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +48,10 @@ public class KnowledgeAdapter extends BaseRecyclerViewAdapter<Knowledgebean.Data
         @SuppressLint("SetTextI18n")
         @Override
         protected void onBindViewHolder(final Knowledgebean.DataBean object,final int position) {
+
             title.setText(object.getName());
+            title.setTextColor(CommonUtils.randomColor());
+
             list = object.getChildren();
             subtitles  = new ArrayList<>();
 
@@ -54,11 +59,11 @@ public class KnowledgeAdapter extends BaseRecyclerViewAdapter<Knowledgebean.Data
                     subtitles.add(childrenBean.getName());
             }
 
-
             StringBuilder string = new StringBuilder();
             for (int i = 0; i<subtitles.size();i++){
                 string.append(subtitles.get(i)).append("  ");
             }
+
             subtitle.setText(string.toString());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

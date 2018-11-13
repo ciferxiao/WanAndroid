@@ -22,6 +22,7 @@ import com.mvp.cifer.wanandroid.basemvp.BaseView;
 import com.mvp.cifer.wanandroid.basemvp.OnItemClickListener;
 import com.mvp.cifer.wanandroid.knowledge.bean.Knowledgebean;
 import com.mvp.cifer.wanandroid.knowledgePart.KnowPartActivity;
+import com.mvp.cifer.wanandroid.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * - @author :  Xiao
@@ -61,10 +63,12 @@ public class KnowledgeFragment extends BaseMVPFragment<KnowledgeContract.Knowled
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        init();
     }
 
-    private void init(){
+    @Override
+    public void initView(){
+        super.initView();
+
         adapter =new KnowledgeAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayout.VERTICAL,false));
         recyclerView.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getActivity()),DividerItemDecoration.VERTICAL));
@@ -73,6 +77,9 @@ public class KnowledgeFragment extends BaseMVPFragment<KnowledgeContract.Knowled
 
         adapter.setOnItemClickListener(this);
         getPresenter().getList();
+        if (CommonUtils.isNetworkConnected()) {
+            showLoading();
+        }
     }
 
     @Override
@@ -103,6 +110,7 @@ public class KnowledgeFragment extends BaseMVPFragment<KnowledgeContract.Knowled
             adapter.clear();
             adapter.addAll(listData);
             adapter.notifyDataSetChanged();
+            showNormal();
         }else{
             recyclerView.setVisibility(View.GONE);
         }
@@ -112,7 +120,11 @@ public class KnowledgeFragment extends BaseMVPFragment<KnowledgeContract.Knowled
     @Override
     public KnowledgePresenter getPresenter() {
         return super.getPresenter();
+    }
 
+    @Override
+    protected void reload() {
+        getPresenter().getList();
     }
 
     @Override

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/error_group"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/transparent"
+    android:visibility="visible">
+
+    <TextView
+        android:id="@+id/error_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_180"
+        android:gravity="center"
+        android:lineSpacingMultiplier="1.4"
+        android:text="不妙！加载失败了ヽ(≧Д≦)ノ\n 告诉大佬一些可能的原因：\n1.不可直视的网络环境\n 2.服务器大哥的不定期抽风\n 3.WanAndroid眼冒金星拒绝服务喔~"
+        android:textColor="@color/black"
+        android:layout_centerInParent="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_error"
+        android:contentDescription="@null"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/error_tv"
+        android:layout_marginBottom="@dimen/dp_16"/>
+
+    <TextView
+        android:id="@+id/error_reload_tv"
+        android:layout_width="@dimen/dp_120"
+        android:layout_height="@dimen/dp_50"
+        android:text="Reload"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/sp_16"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/dp_16"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/error_tv" />
+</RelativeLayout>

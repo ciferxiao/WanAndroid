@@ -55,7 +55,7 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePr
     @BindView(R.id.banner)
     Banner banner;
 
-    @BindView(R.id.refresh_layout)
+    @BindView(R.id.normal_view)
     SmartRefreshLayout refreshLayout;
 
     @BindView(R.id.recyclelist)
@@ -153,6 +153,7 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePr
         adapter.notifyDataSetChanged();
         pagenumber++;
         refreshLayout.finishLoadMore();
+        showNormal();
     }
 
     @Override
@@ -176,6 +177,7 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePr
         banner.start();
 
         banner.setOnBannerListener(this);
+        showNormal();
     }
 
     @Override
@@ -212,9 +214,16 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePr
     }
 
     @Override
+    protected void reload() {
+        getPresenter().getData();
+        refresh();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
     }
+
 
     @Override
     public void onDestroy() {

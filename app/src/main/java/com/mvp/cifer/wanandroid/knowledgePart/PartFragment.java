@@ -1,5 +1,6 @@
 package com.mvp.cifer.wanandroid.knowledgePart;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
@@ -11,12 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.mvp.cifer.wanandroid.MyWebViewActivity;
 import com.mvp.cifer.wanandroid.R;
 import com.mvp.cifer.wanandroid.adapter.PartAdapter;
 import com.mvp.cifer.wanandroid.basemvp.BaseMVPFragment;
 import com.mvp.cifer.wanandroid.basemvp.BasePresenter;
 import com.mvp.cifer.wanandroid.basemvp.BaseView;
 import com.mvp.cifer.wanandroid.basemvp.HttpConstants;
+import com.mvp.cifer.wanandroid.basemvp.OnItemClickListener;
+import com.mvp.cifer.wanandroid.utils.CommonUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -30,14 +34,13 @@ import butterknife.ButterKnife;
  * - @time   :  17:02
  * - @desc   :
  */
-public class PartFragment extends BaseMVPFragment<KnowPartContract.KnowPartView,KnowPartPresenter> implements KnowPartContract.KnowPartView{
+public class PartFragment extends BaseMVPFragment<KnowPartContract.KnowPartView, KnowPartPresenter> implements KnowPartContract.KnowPartView {
     private PartAdapter partAdapter;
     private static int ID;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initView();
     }
 
 
@@ -57,7 +60,7 @@ public class PartFragment extends BaseMVPFragment<KnowPartContract.KnowPartView,
     }
 
     protected void lazyLoadData(int id) {
-        Log.d("xiao111"," 222222222222222222222");
+        Log.d("xiao111", " 222222222222222222222");
         getPresenter().getListData(id);
     }
 
@@ -73,24 +76,37 @@ public class PartFragment extends BaseMVPFragment<KnowPartContract.KnowPartView,
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.part_fragment, container,false);
+        View view = inflater.inflate(R.layout.part_fragment, container, false);
 
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
 
         return view;
     }
 
-    protected void initView() {
-        Log.d("xiao111"," 111111111111111111111");
+    @Override
+    public void initView() {
+        super.initView();
+
         partAdapter = new PartAdapter();
 
-        recyclelist.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayout.VERTICAL,false));
-        recyclelist.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getActivity()),DividerItemDecoration.VERTICAL));
+        recyclelist.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayout.VERTICAL, false));
+        recyclelist.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getActivity()), DividerItemDecoration.VERTICAL));
 
         recyclelist.setAdapter(partAdapter);
 
-        if(getUserVisibleHint()) {
-            lazyLoadData(ID);
+        partAdapter.setOnItemClickListener(new OnItemClickListener<PartBean.DataBean.DataBeans>() {
+            @Override
+            public void onClick(PartBean.DataBean.DataBeans dataBeans, int position) {
+                Intent intent = new Intent(getActivity(), MyWebViewActivity.class);
+                intent.putExtra("url", dataBeans.getLink());
+                startActivity(intent);
+            }
+        });
+
+        reload(ID);
+
+        if (CommonUtils.isNetworkConnected()) {
+            showLoading();
         }
     }
 
@@ -99,13 +115,14 @@ public class PartFragment extends BaseMVPFragment<KnowPartContract.KnowPartView,
         super.onStart();
     }
 
-    public void reload(int id){
-        if(getUserVisibleHint()) {
+
+    public void reload(int id) {
+        if (getUserVisibleHint()) {
             lazyLoadData(id);
         }
     }
 
-    public static PartFragment newInstance(int flag){
+    public static PartFragment newInstance(int flag) {
         Bundle bundle = new Bundle();
         bundle.putInt("flag", flag);
         PartFragment partFragment = new PartFragment();
@@ -116,14 +133,21 @@ public class PartFragment extends BaseMVPFragment<KnowPartContract.KnowPartView,
 
     @Override
     public void setListData(PartBean.DataBean dataBeans) {
-        Log.d("xiao111"," 33333333333333333333333333333");
+        Log.d("xiao111", " 33333333333333333333333333333");
         List<PartBean.DataBean.DataBeans> list = dataBeans.getDatas();
         partAdapter.addAll(list);
         partAdapter.notifyDataSetChanged();
+
+        showNormal();
     }
 
     @Override
     public void loading() {
+
+    }
+
+    @Override
+    protected void reload() {
 
     }
 
