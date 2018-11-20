@@ -62,6 +62,16 @@ public class PartBean extends BaseBean{
 
             private int chapterId;
 
+            private boolean collect;
+
+            public boolean isCollect() {
+                return collect;
+            }
+
+            public void setCollect(boolean collect) {
+                this.collect = collect;
+            }
+
             public String getAuthor() {
                 return author;
             }

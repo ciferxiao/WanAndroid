@@ -28,7 +28,6 @@ public class KnowledgePresenter extends BasePresenter<KnowledgeContract.Knowledg
             @Override
             public void Success(Knowledgebean knowledgebean) {
                 if (knowledgebean.getErrorCode() == 0){
-
                     getView().setListData(knowledgebean.getData());
                 }else{
                     //TODO

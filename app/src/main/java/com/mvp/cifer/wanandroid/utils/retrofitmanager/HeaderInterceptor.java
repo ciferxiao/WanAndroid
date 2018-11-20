@@ -16,12 +16,12 @@ public class HeaderInterceptor implements Interceptor{
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
-        String HEADER_CONNECTION = "keep-alive";
         Request requestBuilder = request.newBuilder()
-                .addHeader("Connection", HEADER_CONNECTION)
-                .addHeader("token", "token-value")
+                .addHeader("username","cifer_xiao")
+                .addHeader("password","xiao123")
                 .method(request.method(), request.body())
                 .build();
+
         return chain.proceed(requestBuilder);
     }
 }

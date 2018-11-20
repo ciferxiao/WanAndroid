@@ -1,5 +1,6 @@
 package com.mvp.cifer.wanandroid.knowledgePart;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -41,8 +42,9 @@ public class PartFragment extends BaseMVPFragment<KnowPartContract.KnowPartView,
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-    }
 
+        Log.d("PartFragment"," PartFragment == 1111111111" );
+    }
 
     @Override
     protected KnowPartPresenter createPersneter() {
@@ -60,7 +62,6 @@ public class PartFragment extends BaseMVPFragment<KnowPartContract.KnowPartView,
     }
 
     protected void lazyLoadData(int id) {
-        Log.d("xiao111", " 222222222222222222222");
         getPresenter().getListData(id);
     }
 
@@ -86,6 +87,7 @@ public class PartFragment extends BaseMVPFragment<KnowPartContract.KnowPartView,
     @Override
     public void initView() {
         super.initView();
+        Log.d("PartFragment"," PartFragment == 2222222222" );
 
         partAdapter = new PartAdapter();
 
@@ -96,10 +98,13 @@ public class PartFragment extends BaseMVPFragment<KnowPartContract.KnowPartView,
 
         partAdapter.setOnItemClickListener(new OnItemClickListener<PartBean.DataBean.DataBeans>() {
             @Override
-            public void onClick(PartBean.DataBean.DataBeans dataBeans, int position) {
-                Intent intent = new Intent(getActivity(), MyWebViewActivity.class);
-                intent.putExtra("url", dataBeans.getLink());
-                startActivity(intent);
+            public void onClick(PartBean.DataBean.DataBeans dataBeans, int position,View view) {
+
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), view, "share_view");
+
+                CommonUtils.startArticleDetailActivity(getActivity(),options,0,"",
+                        dataBeans.getLink(),false,false,false);
+
             }
         });
 
@@ -133,7 +138,6 @@ public class PartFragment extends BaseMVPFragment<KnowPartContract.KnowPartView,
 
     @Override
     public void setListData(PartBean.DataBean dataBeans) {
-        Log.d("xiao111", " 33333333333333333333333333333");
         List<PartBean.DataBean.DataBeans> list = dataBeans.getDatas();
         partAdapter.addAll(list);
         partAdapter.notifyDataSetChanged();
@@ -154,5 +158,6 @@ public class PartFragment extends BaseMVPFragment<KnowPartContract.KnowPartView,
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        Log.d("PartFragment"," PartFragment == 333333333333" );
     }
 }

@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 
 import com.mvp.cifer.wanandroid.R;
 import com.mvp.cifer.wanandroid.adapter.KnowledgeAdapter;
-import com.mvp.cifer.wanandroid.adapter.RecycleViewAdapter;
 import com.mvp.cifer.wanandroid.basemvp.BaseMVPFragment;
 import com.mvp.cifer.wanandroid.basemvp.BasePresenter;
 import com.mvp.cifer.wanandroid.basemvp.BaseView;
@@ -83,7 +82,7 @@ public class KnowledgeFragment extends BaseMVPFragment<KnowledgeContract.Knowled
     }
 
     @Override
-    public void onClick(Knowledgebean.DataBean dataBean, int position) {
+    public void onClick(Knowledgebean.DataBean dataBean, int position,View view) {
         Log.d("xiao111"," position--" + position);
         ArrayList<Integer> idlist =new ArrayList<>();
         ArrayList<String> subtitle = new ArrayList<>();

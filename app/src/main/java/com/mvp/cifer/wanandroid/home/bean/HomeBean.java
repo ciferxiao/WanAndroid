@@ -101,6 +101,16 @@ public class HomeBean  extends BaseBean{
 
             private String superChapterName;
 
+            private boolean collect;
+
+            public boolean isCollect() {
+                return collect;
+            }
+
+            public void setCollect(boolean collect) {
+                this.collect = collect;
+            }
+
             public String getSuperChapterName() {
                 return superChapterName;
             }

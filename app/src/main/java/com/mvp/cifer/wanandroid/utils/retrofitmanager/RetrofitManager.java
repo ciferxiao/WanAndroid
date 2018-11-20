@@ -45,7 +45,7 @@ public class RetrofitManager  {
 //                          .cache(new Cache(File(context.getExternalFilesDir("okhttpCache"), ""), 14 * 1024 * 100))
 //                          .addInterceptor(new CacheInterceptor())
 //                          .addNetworkInterceptor(new CacheInterceptor())//必须要有，否则会返回504
-                            //.addInterceptor(new HeaderInterceptor())
+                            .addInterceptor(new HeaderInterceptor())
                             .addInterceptor(new LoggingInterceptor())//添加请求拦截(可以在此处打印请求信息和响应信息)
                             .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                             .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)

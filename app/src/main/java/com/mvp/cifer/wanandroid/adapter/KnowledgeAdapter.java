@@ -69,7 +69,7 @@ public class KnowledgeAdapter extends BaseRecyclerViewAdapter<Knowledgebean.Data
                 @Override
                 public void onClick(View v) {
                     if(listener != null){
-                        listener.onClick(object,position);
+                        listener.onClick(object,position,v);
                     }
                 }
             });

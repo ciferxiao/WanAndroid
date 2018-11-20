@@ -2,6 +2,7 @@ package com.mvp.cifer.wanandroid.home;
 
 import android.annotation.SuppressLint;
 
+import com.mvp.cifer.wanandroid.basemvp.BaseBean;
 import com.mvp.cifer.wanandroid.home.bean.HomeBannerBean;
 import com.mvp.cifer.wanandroid.home.bean.HomeBean;
 import com.mvp.cifer.wanandroid.utils.AppCallback;
@@ -76,5 +77,34 @@ public class HomeModel {
 
                     }
                 });
+    }
+
+    @SuppressLint("CheckResult")
+    public void getLikeCount(String title, String author, String link, AppCallback appCallback){
+        RetrofitManager.getInstance().getRequestService()
+                .postCollection(title,author,link)
+                .compose(RxSchedulers.io_main())
+                .subscribeWith(new Observer<BaseBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(BaseBean baseBean) {
+                        appCallback.Success(baseBean);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        appCallback.Error(e.toString());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
     }
 }

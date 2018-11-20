@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +22,13 @@ import butterknife.ButterKnife;
  * - @desc   :
  */
 public class RecycleViewAdapter extends BaseRecyclerViewAdapter<HomeBean.DataBean.ArticleBean>{
+    private final static String url = "http://www.wanandroid.com/blogimgs/50c115c2-cf6c-4802-aa7b-a4334de444cd.png";
+
+    private OnItemClickListener<HomeBean.DataBean.ArticleBean> listener;
+
+    public void setOnItemClickListener(OnItemClickListener itemClickListener){
+        this.listener = itemClickListener;
+    }
 
     @NonNull
     @Override
@@ -39,7 +47,7 @@ public class RecycleViewAdapter extends BaseRecyclerViewAdapter<HomeBean.DataBea
         private TextView author;
         private TextView chapter;
         private TextView time;
-        private ImageView like;
+        private CheckBox like;
 
         private ImageView lab;
 
@@ -51,7 +59,7 @@ public class RecycleViewAdapter extends BaseRecyclerViewAdapter<HomeBean.DataBea
             chapter = itemView.findViewById(R.id.chapter);
             time = itemView.findViewById(R.id.time);
             like = itemView.findViewById(R.id.like);
-
+            lab = itemView.findViewById(R.id.imageview);
         }
 
         @SuppressLint("SetTextI18n")
@@ -70,18 +78,60 @@ public class RecycleViewAdapter extends BaseRecyclerViewAdapter<HomeBean.DataBea
                 title.setText(object.getTitle());
             }
 
+            like.setText("（" + object.getZan() + "）");
+
+            if(object.isCollect()){
+                like.setChecked(true);
+            }else{
+                like.setChecked(false);
+            }
+
+            //Glide框架测试
+/*            WanAndroidApp.getInstance().getDisplayer(itemView.getContext()).normalLoad(itemView.getContext(),lab,
+                    url,0,
+                    R.drawable.ic_about);*/
+
             title.setText(object.getTitle());
             title.setText(object.getTitle());
+
+            like.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener != null){
+                        listener.onCheckBoxClick(object,position,like.isChecked());
+                    }
+                }
+            });
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(listener !=null){
-                        listener.onClick(object,position);
+                        listener.onItemClick(object,position,v);
                     }
                 }
             });
         }
+    }
+
+    public void setLikeCount(int position,boolean isChecked){
+        HomeBean.DataBean.ArticleBean bean = data.get(position);
+
+        if (isChecked){
+            bean.setZan(bean.getZan()+1);
+        }else{
+            bean.setZan(bean.getZan()-1);
+        }
+        notifyItemChanged(position);
+    }
+
+
+    public interface OnItemClickListener<T>{
+
+        void onItemClick(T t, int position,View view);
+
+        void onCheckBoxClick(T t,int position,boolean ischecked);
+
     }
 
 }

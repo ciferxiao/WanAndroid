@@ -18,6 +18,9 @@ import retrofit2.http.Query;
  */
 public interface RetrofitService {
 
+    String WAN_HOST = "use_host:wan";
+
+
     @POST("user/login")
     @FormUrlEncoded
     Call<LoginBean> postLoginRetrofit(@Field("username") String username, @Field("password")String password);

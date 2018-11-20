@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,13 +31,13 @@ public class PartAdapter extends BaseRecyclerViewAdapter<PartBean.DataBean.DataB
         return new PartListViewHolder(viewGroup, R.layout.article_item);
     }
 
-    class PartListViewHolder extends BaseRecyclerViewHolder<PartBean.DataBean.DataBeans> {
+    public class PartListViewHolder extends BaseRecyclerViewHolder<PartBean.DataBean.DataBeans> {
 
         private TextView title;
         private TextView author;
         private TextView chapter;
         private TextView time;
-        private ImageView like;
+        private CheckBox like;
 
         private ImageView lab;
 
@@ -70,16 +71,32 @@ public class PartAdapter extends BaseRecyclerViewAdapter<PartBean.DataBean.DataB
             title.setText(object.getTitle());
             title.setText(object.getTitle());
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+            like.setText("（" + object.getZan() + "）");
+
+            if(object.isCollect()){
+                like.setChecked(true);
+            }else{
+                like.setChecked(false);
+            }
+
+
+            like.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(listener !=null){
-                        listener.onClick(object,position);
+                    if (listener != null){
+                        listener.onClick(object,position,v);
                     }
                 }
             });
 
-
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener !=null){
+                        listener.onClick(object,position,v);
+                    }
+                }
+            });
 
         }
     }

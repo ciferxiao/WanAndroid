@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.mvp.cifer.wanandroid.R;
@@ -131,6 +132,10 @@ public abstract class BaseMVPFragment<V extends BaseView,P extends BasePresenter
             default:
                 break;
         }
+    }
+
+    public void showToast(String string){
+        Toast.makeText(getActivity(), string, Toast.LENGTH_SHORT).show();
     }
 
     @Override

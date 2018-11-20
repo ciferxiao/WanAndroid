@@ -18,9 +18,11 @@ public class HomeContract  {
 
         void setBasicData(List<HomeBean.DataBean.ArticleBean> list, boolean isrefresh);
 
-        void setBannerData(List<String> images, List<String> titles);
+        void setBannerData(List<String> images, List<String> titles,List<String> url);
 
         void showToast(String msg);
+
+        void setLikeCount(int position,boolean isChecked);
     }
 
     public interface HomePresenterInterface{
@@ -28,6 +30,8 @@ public class HomeContract  {
         void getData();
 
         void getListData(int pageNum,boolean isrefresh);
+
+        void onLikeData(String title,String author,String link,int position,boolean isCheck);
     }
 
 }

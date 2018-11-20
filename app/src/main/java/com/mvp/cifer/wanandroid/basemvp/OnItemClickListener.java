@@ -1,5 +1,7 @@
 package com.mvp.cifer.wanandroid.basemvp;
 
+import android.view.View;
+
 /**
  * User: Jianting
  * Date: 2017-02-28
@@ -7,5 +9,5 @@ package com.mvp.cifer.wanandroid.basemvp;
  * desc:
  */
 public interface OnItemClickListener<T> {
-    void onClick(T t, int position);
+    void onClick(T t, int position,View view);
 }
