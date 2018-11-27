@@ -64,7 +64,7 @@ public class KnowPartActivity extends AppCompatActivity implements ViewPager.OnP
 
         //有多少个标题就有多少个碎片，动态添加
         for(int i=0;i<iddatas.size();i++){
-            PartFragment testFm = new PartFragment().newInstance(iddatas.get(0));//TODO 初始化第一个 优化
+            PartFragment testFm = new PartFragment().newInstance(iddatas.get(i));//TODO 初始化第一个 优化
             fragmentList.add(testFm);
         }
 
@@ -110,7 +110,6 @@ public class KnowPartActivity extends AppCompatActivity implements ViewPager.OnP
 
     @Override
     public void onPageSelected(int i) {
-        Log.d("xiao111", i + " aaaaaaaaa ");
         fragmentList.get(i).setUserVisibleHint(true);
         fragmentList.get(i).reload(iddatas.get(i));
 

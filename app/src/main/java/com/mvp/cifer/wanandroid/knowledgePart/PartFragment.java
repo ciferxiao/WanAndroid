@@ -13,13 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.mvp.cifer.wanandroid.MyWebViewActivity;
 import com.mvp.cifer.wanandroid.R;
 import com.mvp.cifer.wanandroid.adapter.PartAdapter;
 import com.mvp.cifer.wanandroid.basemvp.BaseMVPFragment;
-import com.mvp.cifer.wanandroid.basemvp.BasePresenter;
-import com.mvp.cifer.wanandroid.basemvp.BaseView;
-import com.mvp.cifer.wanandroid.basemvp.HttpConstants;
 import com.mvp.cifer.wanandroid.basemvp.OnItemClickListener;
 import com.mvp.cifer.wanandroid.utils.CommonUtils;
 
@@ -84,10 +80,15 @@ public class PartFragment extends BaseMVPFragment<KnowPartContract.KnowPartView,
         return view;
     }
 
+    private int flagID;
     @Override
     public void initView() {
         super.initView();
         Log.d("PartFragment"," PartFragment == 2222222222" );
+
+        Bundle bundle = getArguments();
+        assert bundle != null;
+        flagID =  bundle.getInt("flag");
 
         partAdapter = new PartAdapter();
 
@@ -108,7 +109,7 @@ public class PartFragment extends BaseMVPFragment<KnowPartContract.KnowPartView,
             }
         });
 
-        reload(ID);
+        reload(flagID);
 
         if (CommonUtils.isNetworkConnected()) {
             showLoading();

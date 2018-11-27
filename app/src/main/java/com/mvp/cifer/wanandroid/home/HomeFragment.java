@@ -17,13 +17,10 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
-import com.mvp.cifer.wanandroid.MyWebViewActivity;
 import com.mvp.cifer.wanandroid.R;
 import com.mvp.cifer.wanandroid.adapter.RecycleViewAdapter;
 import com.mvp.cifer.wanandroid.basemvp.BaseMVPFragment;
 import com.mvp.cifer.wanandroid.basemvp.HttpConstants;
-import com.mvp.cifer.wanandroid.basemvp.OnItemClickListener;
-import com.mvp.cifer.wanandroid.home.bean.ArticleBean;
 import com.mvp.cifer.wanandroid.home.bean.HomeBean;
 import com.mvp.cifer.wanandroid.utils.BusMessageEvent;
 import com.mvp.cifer.wanandroid.utils.CommonUtils;
@@ -122,7 +119,6 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePr
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 pagenumber = 0;
                 getPresenter().getListData(pagenumber,true);
-                Log.d("xiao111"," onRefresh ==" + pagenumber);
                 refreshLayout.finishRefresh(1000);
             }
         });
@@ -131,7 +127,6 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePr
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 getPresenter().getListData(pagenumber,false);
-                refreshLayout.finishRefresh(1000);Log.d("xiao111"," onLoadMore ==" + pagenumber);
             }
         });
 
@@ -139,6 +134,9 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePr
 
         refresh();
 
+        if (CommonUtils.isNetworkConnected()) {
+            showLoading();
+        }
     }
 
     private void refresh(){
@@ -154,11 +152,11 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePr
             adapter.clear();
         }
 
-        Log.d("xiao111"," getpages ==" + pagenumber);
         adapter.addAll(houseItems);
         adapter.notifyDataSetChanged();
         pagenumber++;
         refreshLayout.finishLoadMore();
+        banner.setVisibility(View.VISIBLE);
         showNormal();
     }
 
@@ -191,7 +189,6 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePr
 
     @Override
     public void OnBannerClick(int position) {
-        Log.d("xiao111"," position " + position);
         CommonUtils.startArticleDetailActivity(getActivity(),null,0,title.get(position),
                     url.get(position),false,false,false);
     }
@@ -251,7 +248,6 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePr
 
     @Override
     public void onCheckBoxClick(HomeBean.DataBean.ArticleBean articleBean, int position,boolean isChecked) {
-        Log.d("xiao111"," position == " + position);
         getPresenter().onLikeData(articleBean.getTitle(),articleBean.getAuthor(),articleBean.getLink(),position,isChecked);
 
     }

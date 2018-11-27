@@ -13,9 +13,7 @@ public class ImageDisplayer {
     public ImageDisplayer() {
         try {
             loader = LoaderFactory.getLoader(GlideImageLoader.class);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
     }

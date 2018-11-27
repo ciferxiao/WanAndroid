@@ -33,7 +33,6 @@ public class KnowPartPresenter extends BasePresenter<KnowPartContract.KnowPartVi
 
             @Override
             public void Error(String error) {
-                Log.d("xiao111","error == " + error);
             }
         });
 

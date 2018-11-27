@@ -21,6 +21,8 @@ import com.mvp.cifer.wanandroid.utils.AppCallback;
 import com.mvp.cifer.wanandroid.utils.retrofitmanager.RetrofitManager;
 import com.mvp.cifer.wanandroid.utils.retrofitmanager.RxSchedulers;
 
+import org.greenrobot.eventbus.util.ErrorDialogManager;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -37,30 +39,30 @@ import io.reactivex.disposables.Disposable;
  * - @desc   :
  */
 public class ProjectListFragment extends Fragment{
-    private static int initialid;
 
-    private final static String TAG = "ProjectListFragment";
+    public final static String TAG = "ProjectListFragment";
 
     @BindView(R.id.xiaolist)
     RecyclerView recyclelist;
 
     private ProjectAdapter adapter;
 
-
     public static ProjectListFragment getNewInstance(int id){
-        initialid = id;
-        Log.d(TAG," ]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]");
-        return new ProjectListFragment();
-    }
-
-    public static ProjectListFragment aaaa(int id){
+        ProjectListFragment fragment = new ProjectListFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("id",id);
+        bundle.putInt("ID",id);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+/*
+    public static ProjectListFragment aaaa(){
+        Bundle bundle = new Bundle();
+        bundle.putInt("id",293);
         ProjectListFragment fragment = new ProjectListFragment();
         fragment.setArguments(bundle);
-        initialid = id;
         return  fragment;
-    }
+    }*/
+
 
     @Nullable
     @Override
@@ -77,7 +79,12 @@ public class ProjectListFragment extends Fragment{
         initView();
     }
 
+    private int id ;
     private void initView(){
+
+        Bundle bundle = getArguments();
+        assert bundle != null;
+        id = bundle.getInt("ID");
 
         adapter = new ProjectAdapter();
         Log.d(TAG," initView ------------------");
@@ -85,13 +92,14 @@ public class ProjectListFragment extends Fragment{
         recyclelist.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayout.VERTICAL, false));
         recyclelist.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getActivity()), DividerItemDecoration.VERTICAL));
 
-        reload(294);
+        reload(id);
         recyclelist.setAdapter(adapter);
     }
 
     private AppCallback<ProjectListBean> appCallback = new AppCallback<ProjectListBean>() {
         @Override
         public void Success(ProjectListBean projectListBean) {
+            Log.d("xiao111",projectListBean.getErrorMsg() + " -----------------");
             setBeanData(projectListBean);
         }
 

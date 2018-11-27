@@ -62,7 +62,6 @@ public class MyWebViewActivity extends AppCompatActivity  {
 
         getBundleData();
 
-        Log.d("xiao111"," url agent web  ==  " + articleLink);
 
         webView = AgentWeb.with(this)
                 .setAgentWebParent(webcontent, new LinearLayout.LayoutParams(-1, -1))

@@ -46,7 +46,6 @@ public class TabListAdapter extends BaseRecyclerViewAdapter<ProjectBean.DataBean
         @Override
         protected void onBindViewHolder(ProjectBean.DataBean object, int position) {
 
-
             title.setText(object.getName());
 
             if(position == getCurrentPosition()){

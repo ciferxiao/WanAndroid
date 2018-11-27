@@ -83,7 +83,6 @@ public class KnowledgeFragment extends BaseMVPFragment<KnowledgeContract.Knowled
 
     @Override
     public void onClick(Knowledgebean.DataBean dataBean, int position,View view) {
-        Log.d("xiao111"," position--" + position);
         ArrayList<Integer> idlist =new ArrayList<>();
         ArrayList<String> subtitle = new ArrayList<>();
 
@@ -104,7 +103,6 @@ public class KnowledgeFragment extends BaseMVPFragment<KnowledgeContract.Knowled
     @Override
     public void setListData(List<Knowledgebean.DataBean> listData) {
         if (listData != null){
-            Log.d("xiao111"," listdata size =" + listData.size());
 
             adapter.clear();
             adapter.addAll(listData);

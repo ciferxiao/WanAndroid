@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.flyco.tablayout.SlidingTabLayout;
 import com.mvp.cifer.wanandroid.MainAgent;
@@ -106,7 +107,8 @@ public class ProjectFragment extends BaseMVPFragment<ProjectContract.ProjectView
                 //TODO - -- - -- - -- -
                 Log.d("xiao111"," item position = " + position);
                 viewPager.setCurrentItem(position);
-                fragmentList.get(position).reload(ids.get(position));
+                ProjectListFragment fragment = fragmentList.get(position);
+                fragment.reload(ids.get(position));
             }
         });
         recyclelist.setAdapter(listadapter);
@@ -116,32 +118,47 @@ public class ProjectFragment extends BaseMVPFragment<ProjectContract.ProjectView
     private List<Integer> ids;
     @Override
     public void setBasicTab(List<ProjectBean.DataBean> projectBeans) {
-        ArrayList<String> titles = new ArrayList<>();
-        ids = new ArrayList<>();
-        for(ProjectBean.DataBean bean: projectBeans){
-            ids.add(bean.getId());
-            titles.add(bean.getName());
+        if(projectBeans != null){
+            ArrayList<String> titles = new ArrayList<>();
+            ids = new ArrayList<>();
+            for(ProjectBean.DataBean bean: projectBeans){
+                ids.add(bean.getId());
+                titles.add(bean.getName());
+                ProjectListFragment fragment =  ProjectListFragment.getNewInstance(bean.getId());
+                fragmentList.add(fragment);
+                //fragment.reload(bean.getId());
+            }
+            String[] titlestrings = new String[titles.size()];
+            titles.toArray(titlestrings);
+            if(adapter == null ){
+                adapter = new ViewpagerAdapter(getChildFragmentManager(),titlestrings);
+                Log.d(ProjectListFragment.TAG," adapter +++++++++++");
+            }
+            adapter.addFragmentList(fragmentList);
+            viewPager.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager()) {
+                @Override
+                public Fragment getItem(int i) {
+                    return fragmentList.get(i);
+                }
 
-            ProjectListFragment fragment =  ProjectListFragment.aaaa(ids.get(0));
-            fragmentList.add(fragment);
+                @Override
+                public int getCount() {
+                    return fragmentList == null? 0 : fragmentList.size();
+                }
+
+                @Nullable
+                @Override
+                public CharSequence getPageTitle(int position) {
+                    return titlestrings[position];
+                }
+            });
+
+            listadapter.clear();
+            listadapter.addAll(projectBeans);
+            listadapter.notifyDataSetChanged();
+        }else{
+            Toast.makeText(getActivity(), "请下拉刷新", Toast.LENGTH_SHORT).show();
         }
-
-        String[] titlestrings = new String[titles.size()];
-        titles.toArray(titlestrings);
-
-        if (adapter == null){
-            adapter = new ViewpagerAdapter(this.getChildFragmentManager(),titlestrings,fragmentList);
-            //adapter.addFramgent(fragmentList);
-            Log.d("ProjectFragment"," adapter +++++++++++");
-        }
-
-        viewPager.setAdapter(adapter);
-
-        listadapter.clear();
-        listadapter.addAll(projectBeans);
-        listadapter.notifyDataSetChanged();
-
-        //slidingTabLayout.setViewPager(viewPager);
     }
 
 
@@ -183,10 +200,9 @@ public class ProjectFragment extends BaseMVPFragment<ProjectContract.ProjectView
         private ArrayList<ProjectListFragment> fragments = new ArrayList<>();
         private String[] titles;
 
-        ViewpagerAdapter(FragmentManager fm,String[] titles,ArrayList<ProjectListFragment> fragment) {
+        ViewpagerAdapter(FragmentManager fm,String[] titles) {
             super(fm);
             this.titles = titles;
-            fragments = fragment;
         }
 
         @Override
@@ -205,14 +221,9 @@ public class ProjectFragment extends BaseMVPFragment<ProjectContract.ProjectView
             return titles[position];
         }
 
-        @Override
-        public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-            return super.isViewFromObject(view, object);
+        void addFragmentList(ArrayList<ProjectListFragment> fragments){
+            this.fragments = fragments;
         }
-
-        /*     void addFramgent(ArrayList<ProjectListFragment> fragment){
-            fragments = fragment;
-        }*/
     }
 
 }

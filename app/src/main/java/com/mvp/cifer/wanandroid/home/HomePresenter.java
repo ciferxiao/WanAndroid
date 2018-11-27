@@ -50,7 +50,6 @@ public class HomePresenter extends BasePresenter<HomeContract.IHomeView> impleme
             @Override
             public void Success(HomeBean homeBean) {
                 if(homeBean.getErrorCode() == 0 ){
-                    Log.d("xiao111"," homeBean == " +homeBean.getDataBean() );
 
                     HomeBean.DataBean dataBean= homeBean.getDataBean();
                     List<HomeBean.DataBean.ArticleBean> lists = dataBean.getDatas();

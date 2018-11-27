@@ -1,5 +1,6 @@
 package com.mvp.cifer.wanandroid;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,15 +12,20 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Slide;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.mvp.cifer.wanandroid.home.HomeFragment;
 import com.mvp.cifer.wanandroid.knowledge.KnowledgeFragment;
 import com.mvp.cifer.wanandroid.project.ProjectFragment;
+import com.mvp.cifer.wanandroid.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +64,10 @@ public class MainAgent extends FragmentActivity implements ViewPager.OnPageChang
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //转场动画
+        getWindow().setEnterTransition(new Fade().setDuration(2000));
+        getWindow().setExitTransition(new Fade().setDuration(2000));
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         init();
@@ -77,7 +87,6 @@ public class MainAgent extends FragmentActivity implements ViewPager.OnPageChang
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        Log.d("xiao111"," item onclick ");
         switch (menuItem.getItemId()){
             case R.id.nav_item_setting:
 
@@ -85,9 +94,10 @@ public class MainAgent extends FragmentActivity implements ViewPager.OnPageChang
             case R.id.nav_item_about_us:
                 dlContent.closeDrawers();
                 String url = "http://wanandroid.com/index";
-                Intent intent = new Intent(this,MyWebViewActivity.class);
-                intent.putExtra("url",url);
-                startActivity(intent);
+                //ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this,menuItem.getActionView(), "share_view");
+                CommonUtils.startArticleDetailActivity
+                        (this,null,0,"",url,false,false,false);
+
                 return true;
             case R.id.nav_item_logout:
                 return true;
@@ -154,6 +164,18 @@ public class MainAgent extends FragmentActivity implements ViewPager.OnPageChang
         }
     }
 
+    private long exitTime = 0;
+    @Override
+    public void onBackPressed() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+            return;
+        }
+        this.finish();
+
+    }
+
     public static class ViewPagerAdapter extends FragmentStatePagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
 
@@ -175,4 +197,7 @@ public class MainAgent extends FragmentActivity implements ViewPager.OnPageChang
             mFragmentList.add(fragment);
         }
     }
+
+
+
 }

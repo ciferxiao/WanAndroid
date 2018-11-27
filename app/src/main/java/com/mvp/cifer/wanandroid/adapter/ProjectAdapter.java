@@ -65,8 +65,8 @@ public class ProjectAdapter extends BaseRecyclerViewAdapter<ProjectListBean.Data
 
             title.setText("111111111111111111111");
 
-  /*          WanAndroidApp.getInstance().getDisplayer(itemView.getContext())
-                    .normalLoad(imageview.getContext(),imageview,bean.getEnvelopePic(),0,R.drawable.ic_about);*/
+            WanAndroidApp.getInstance().getDisplayer(itemView.getContext())
+                    .normalLoad(imageview.getContext(),imageview,bean.getEnvelopePic(),0,R.drawable.ic_about);
 
             details.setText(bean.getDesc());
 
