@@ -1,22 +1,26 @@
 package com.mvp.cifer.wanandroid.project.ProjectListFragment;
 
 import android.annotation.SuppressLint;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.mvp.cifer.wanandroid.R;
 import com.mvp.cifer.wanandroid.adapter.ProjectAdapter;
+import com.mvp.cifer.wanandroid.project.ProjectBean;
 import com.mvp.cifer.wanandroid.utils.AppCallback;
 import com.mvp.cifer.wanandroid.utils.retrofitmanager.RetrofitManager;
 import com.mvp.cifer.wanandroid.utils.retrofitmanager.RxSchedulers;
@@ -31,6 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import previewlibrary.GPreviewBuilder;
 
 /**
  * - @author :  Xiao
@@ -38,7 +43,7 @@ import io.reactivex.disposables.Disposable;
  * - @time   :  15:20
  * - @desc   :
  */
-public class ProjectListFragment extends Fragment{
+public class ProjectListFragment extends Fragment {
 
     public final static String TAG = "ProjectListFragment";
 
@@ -47,10 +52,10 @@ public class ProjectListFragment extends Fragment{
 
     private ProjectAdapter adapter;
 
-    public static ProjectListFragment getNewInstance(int id){
+    public static ProjectListFragment getNewInstance(int id) {
         ProjectListFragment fragment = new ProjectListFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("ID",id);
+        bundle.putInt("ID", id);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -58,8 +63,8 @@ public class ProjectListFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.project_list,container,false);
-        ButterKnife.bind(this,view);
+        View view = inflater.inflate(R.layout.project_list, container, false);
+        ButterKnife.bind(this, view);
         return view;
     }
 
@@ -69,12 +74,32 @@ public class ProjectListFragment extends Fragment{
         initView();
     }
 
-    private int id ;
-    private void initView(){
+    private int id;
+
+    private void initView() {
         Bundle bundle = getArguments();
         assert bundle != null;
         id = bundle.getInt("ID");
         adapter = new ProjectAdapter();
+
+        adapter.onItemClickListener(new ProjectAdapter.OnTitleClickListener() {
+            @Override
+            public void onItemClick(ProjectBean.DataBean object, int position) {
+
+            }
+
+            @Override
+            public void onLookBigPic(ImageView view, String url) {
+                GPreviewBuilder.from(getActivity())
+                        .setSingleData(computeBoundsBackward(view, url))
+                        .setCurrentIndex(0)
+                        .setSingleFling(true)
+                        .setType(GPreviewBuilder.IndicatorType.Number)
+                        .start();
+
+
+            }
+        });
 
         recyclelist.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayout.VERTICAL, false));
         recyclelist.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getActivity()), DividerItemDecoration.VERTICAL));
@@ -97,12 +122,12 @@ public class ProjectListFragment extends Fragment{
 
     public void reload(int id) {
         if (getUserVisibleHint()) {
-            initData(id,appCallback);
+            initData(id, appCallback);
         }
     }
 
     @SuppressLint("CheckResult")
-    private void initData(int id ,AppCallback<ProjectListBean> callback){
+    private void initData(int id, AppCallback<ProjectListBean> callback) {
         RetrofitManager.getInstance().getRequestService()
                 .getProjectList(id)
                 .compose(RxSchedulers.io_main())
@@ -127,14 +152,24 @@ public class ProjectListFragment extends Fragment{
                 });
     }
 
-
-    private void setBeanData(ProjectListBean projectListBean){
-        if(projectListBean != null){
+    private void setBeanData(ProjectListBean projectListBean) {
+        if (projectListBean != null) {
             ArrayList<ProjectListBean.DataBean.DataBeans> list = projectListBean.getData().getDatas();
             adapter.clear();
             adapter.addAll(list);
             adapter.notifyDataSetChanged();
         }
+    }
+
+    private ProjectListBean.DataBean.DataBeans computeBoundsBackward(ImageView iv_img, String picUrl) {
+        ProjectListBean.DataBean.DataBeans dataBeans = new ProjectListBean.DataBean.DataBeans();
+        dataBeans.setEnvelopePic(picUrl);
+        Rect bounds = new Rect();
+        if (iv_img != null) {
+            iv_img.getGlobalVisibleRect(bounds);
+        }
+        dataBeans.setmBounds(bounds);
+        return dataBeans;
     }
 
     @Override

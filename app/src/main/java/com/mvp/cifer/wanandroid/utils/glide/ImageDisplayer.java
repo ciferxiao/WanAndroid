@@ -63,6 +63,10 @@ public class ImageDisplayer {
         loader.displayImage(context, targetImageView, imgUri, loadingPicId, failPicId, roundAngle, listener);
     }
 
+    public void downLoadImagewithIcon(Context context, String imgUri, ImageLoadingListener listener) {
+        loader.downLoadImageWithIcon(context, imgUri, listener);
+    }
+
     public void clearCache() {
         loader.clearCache();
     }

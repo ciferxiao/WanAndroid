@@ -219,6 +219,44 @@ public class GlideImageLoader implements ILoader {
     }
 
     @Override
+    public void downLoadImageWithIcon(Context context, final String imgUri, final ImageLoadingListener listener) {
+        if (context == null) {
+            return;
+        }
+        Glide.with(context)
+                .load(imgUri)
+                .asBitmap()
+                .transform(new AddIconTransformation(context))
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onStart() {
+                        super.onStart();
+                        if (listener != null) {
+                            listener.onLoadingStarted(imgUri, null);
+                        }
+
+                    }
+
+                    @Override
+                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                        super.onLoadFailed(e, errorDrawable);
+                        if (listener != null) {
+                            listener.onLoadingFailed(imgUri, null, e == null ? "" : e.getMessage());
+                        }
+
+                    }
+
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        if (listener != null) {
+                            listener.onLoadingComplete(imgUri, null, resource);
+                        }
+                    }
+                });
+    }
+
+    @Override
     public void displayImage(Context context, ImageView targetImageView, final String imgUri, final ImageLoadingListener listener) {
         if (context == null) {
             return;

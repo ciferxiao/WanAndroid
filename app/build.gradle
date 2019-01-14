@@ -50,6 +50,7 @@ dependencies {
     implementation rootProject.ext.dependencies.glide
     implementation rootProject.ext.dependencies.lottie
     implementation rootProject.ext.dependencies.flycoTabLayout
+    implementation rootProject.ext.dependencies.multidex
 
     //下拉刷新 SmartRefreshLayout 框架
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
@@ -61,4 +62,5 @@ dependencies {
     //AgentWeb
     implementation 'com.just.agentweb:agentweb:4.0.2' // (必选)
     implementation 'com.just.agentweb:filechooser:4.0.2'// (可选)
+    implementation project(path: ':libImagepicker')
 }

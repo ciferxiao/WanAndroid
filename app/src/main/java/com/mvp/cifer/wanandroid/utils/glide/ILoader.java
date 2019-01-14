@@ -133,4 +133,14 @@ public interface ILoader {
      * Remark: <BR>
      */
     File getCacheDirectory();
+
+    /**
+     * Method name: downLoadImage <BR>
+     * Description: 下载图片 <BR>
+     * Remark: <BR>
+     *
+     * @param context
+     * @param imgUri
+     */
+    void downLoadImageWithIcon(Context context, String imgUri, ImageLoadingListener listener);
 }

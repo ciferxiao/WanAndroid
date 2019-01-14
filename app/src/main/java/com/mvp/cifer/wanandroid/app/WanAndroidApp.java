@@ -22,7 +22,7 @@ import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
  * - @time   :  10:39
  * - @desc   :
  */
-public class WanAndroidApp extends Application {
+public class WanAndroidApp extends SdkApplication {
 
     public static final int REQUEST_PERMISSION_STORAGE = 0x01;
 
@@ -74,7 +74,5 @@ public class WanAndroidApp extends Application {
     public static synchronized WanAndroidApp getInstance() {
         return instance;
     }
-
-
 
 }

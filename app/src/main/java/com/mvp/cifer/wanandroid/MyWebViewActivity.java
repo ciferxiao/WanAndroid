@@ -62,7 +62,6 @@ public class MyWebViewActivity extends AppCompatActivity  {
 
         getBundleData();
 
-
         webView = AgentWeb.with(this)
                 .setAgentWebParent(webcontent, new LinearLayout.LayoutParams(-1, -1))
                 .useDefaultIndicator()

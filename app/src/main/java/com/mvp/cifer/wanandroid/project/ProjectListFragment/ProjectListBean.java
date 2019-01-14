@@ -1,11 +1,17 @@
 package com.mvp.cifer.wanandroid.project.ProjectListFragment;
 
 
+import android.graphics.Rect;
+import android.os.Parcel;
+import android.support.annotation.Nullable;
+
 import com.mvp.cifer.wanandroid.basemvp.BaseBean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import previewlibrary.enitity.IThumbViewInfo;
 
 /**
  * - @author :  Xiao
@@ -24,7 +30,7 @@ public class ProjectListBean extends BaseBean {
         this.data = data;
     }
 
-    public static class DataBean implements Serializable{
+    public static class DataBean implements Serializable {
         private ArrayList<DataBeans> datas;
 
 
@@ -36,7 +42,7 @@ public class ProjectListBean extends BaseBean {
             this.datas = datas;
         }
 
-        public static class DataBeans implements Serializable{
+        public static class DataBeans implements IThumbViewInfo {
             private String desc;
 
             private String title;
@@ -96,6 +102,71 @@ public class ProjectListBean extends BaseBean {
             public void setNiceDate(String niceDate) {
                 this.niceDate = niceDate;
             }
+
+            private Rect mBounds;
+
+            public Rect getmBounds() {
+                return mBounds;
+            }
+
+            public void setmBounds(Rect mBounds) {
+                this.mBounds = mBounds;
+            }
+
+            @Override
+            public String getUrl() {
+                return envelopePic;
+            }
+
+            @Override
+            public Rect getBounds() {
+                return mBounds;
+            }
+
+            @Nullable
+            @Override
+            public String getVideoUrl() {
+                return null;
+            }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeString(this.desc);
+                dest.writeString(this.title);
+                dest.writeString(this.projectLink);
+                dest.writeString(this.envelopePic);
+                dest.writeString(this.author);
+                dest.writeParcelable(this.mBounds,flags);
+
+            }
+
+            public DataBeans(){};
+
+            protected DataBeans(Parcel parcel) {
+                this.desc = parcel.readString();
+                this.title = parcel.readString();
+                this.projectLink = parcel.readString();
+                this.envelopePic = parcel.readString();
+                this.author = parcel.readString();
+                this.mBounds = parcel.readParcelable(Rect.class.getClassLoader());
+            }
+
+            public static final Creator<DataBeans> CREATOR = new Creator<DataBeans>() {
+                @Override
+                public DataBeans createFromParcel(Parcel source) {
+                    return new DataBeans(source);
+                }
+
+                @Override
+                public DataBeans[] newArray(int size) {
+                    return new DataBeans[size];
+                }
+            };
         }
     }
 

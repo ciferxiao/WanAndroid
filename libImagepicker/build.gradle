@@ -1,0 +1,21 @@
+apply plugin: 'com.android.library'
+
+android {
+
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        vectorDrawables.useSupportLibrary = true
+
+    }
+
+}
+
+dependencies {
+    implementation rootProject.ext.dependencies.supportv4
+    api rootProject.ext.dependencies.appcompatv7
+    implementation rootProject.ext.dependencies.recyclerviewv7
+    implementation rootProject.ext.dependencies.photoview
+}

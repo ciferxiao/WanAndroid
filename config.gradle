@@ -24,5 +24,17 @@ ext {
             "lottie"        : "com.airbnb.android:lottie:2.3.0",
 
             "flycoTabLayout": "com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar",
+
+            //放大缩小imageview
+            "photoview"            : "com.github.chrisbanes.photoview:library:1.2.4",//放大缩小imageview
+
+            "appcompatv7"          : "com.android.support:appcompat-v7:${supportVersion}",
+
+            "recyclerviewv7"       : "com.android.support:recyclerview-v7:${supportVersion}",
+
+            "supportv4"            : "com.android.support:support-v4:${supportVersion}",
+
+            "multidex"             : "com.android.support:multidex:1.0.3",
+
     ]
 }

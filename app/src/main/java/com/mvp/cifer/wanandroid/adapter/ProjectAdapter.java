@@ -30,7 +30,7 @@ import com.mvp.cifer.wanandroid.project.ProjectListFragment.ProjectListBean;
 public class ProjectAdapter extends BaseRecyclerViewAdapter<ProjectListBean.DataBean.DataBeans> {
 
     private OnTitleClickListener listener;
-    public void setOnTitleClickListener(OnTitleClickListener listener){
+    public void onItemClickListener(OnTitleClickListener listener){
         this.listener = listener;
     }
 
@@ -73,6 +73,15 @@ public class ProjectAdapter extends BaseRecyclerViewAdapter<ProjectListBean.Data
             title.setText(bean.getTitle());
             others.setText(bean.getNiceDate() + "    " + bean.getAuthor());
 
+            imageview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener != null){
+                        listener.onLookBigPic(imageview,bean.getEnvelopePic());
+                    }
+                }
+            });
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -94,7 +103,11 @@ public class ProjectAdapter extends BaseRecyclerViewAdapter<ProjectListBean.Data
     }
 
     public interface OnTitleClickListener{
+
         void onItemClick(ProjectBean.DataBean object, int position);
+
+        //查看大图
+        void onLookBigPic(ImageView view ,String url);
     }
 
 
