@@ -25,6 +25,11 @@ public class TabListAdapter extends BaseRecyclerViewAdapter<ProjectBean.DataBean
         this.listener = listener;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
+
     @NonNull
     @Override
     public BaseRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {

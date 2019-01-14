@@ -61,7 +61,6 @@
             app:layout_constraintTop_toBottomOf="@+id/titleView"
             android:text="（3）"
             android:textSize="15sp"
-            android:visibility="gone"
             android:layout_marginTop="@dimen/dp_15"
             tools:ignore="RtlSymmetry"/>
 
@@ -70,6 +69,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/like_icon_backgrond"
             android:id="@+id/imageview"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@+id/titleView"/>
 
 

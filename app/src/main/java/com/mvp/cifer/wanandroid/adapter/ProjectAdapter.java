@@ -34,6 +34,11 @@ public class ProjectAdapter extends BaseRecyclerViewAdapter<ProjectListBean.Data
         this.listener = listener;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
+
     @NonNull
     @Override
     public BaseRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -53,23 +58,19 @@ public class ProjectAdapter extends BaseRecyclerViewAdapter<ProjectListBean.Data
             imageview = itemView.findViewById(R.id.imageview);
             details = itemView.findViewById(R.id.detail);
             others = itemView.findViewById(R.id.others);
-            imageview.setVisibility(View.GONE);
-
         }
 
         @SuppressLint("SetTextI18n")
         @Override
         protected void onBindViewHolder(ProjectListBean.DataBean.DataBeans bean, int position) {
-
-            Log.d("ProjectListFragment"," onBindViewHolder ===============================" );
-
-            title.setText("111111111111111111111");
-
             WanAndroidApp.getInstance().getDisplayer(itemView.getContext())
                     .normalLoad(imageview.getContext(),imageview,bean.getEnvelopePic(),0,R.drawable.ic_about);
 
+            Log.d("xiao111"," bean == " + bean.getAuthor());
+
             details.setText(bean.getDesc());
 
+            title.setText(bean.getTitle());
             others.setText(bean.getNiceDate() + "    " + bean.getAuthor());
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -93,9 +94,7 @@ public class ProjectAdapter extends BaseRecyclerViewAdapter<ProjectListBean.Data
     }
 
     public interface OnTitleClickListener{
-
         void onItemClick(ProjectBean.DataBean object, int position);
-
     }
 
 

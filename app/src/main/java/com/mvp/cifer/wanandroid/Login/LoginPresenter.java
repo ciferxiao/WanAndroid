@@ -6,6 +6,7 @@ import com.mvp.cifer.wanandroid.Login.retrofit.LoginBean;
 import com.mvp.cifer.wanandroid.basemvp.BaseBean;
 import com.mvp.cifer.wanandroid.basemvp.BasePresenter;
 import com.mvp.cifer.wanandroid.utils.AppCallback;
+import com.mvp.cifer.wanandroid.utils.cookies.CookiesManager;
 
 /**
  * - @author :  Xiao
@@ -27,6 +28,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.LoginView> imple
             public void Success(BaseBean bean) {
                 if(bean.getErrorCode() == 0 ){
                     getView().go();
+                    CookiesManager.clearAllCookies();
                 }else{
                     getView().showToast(bean.getErrorMsg());
                 }
@@ -39,6 +41,4 @@ public class LoginPresenter extends BasePresenter<LoginContract.LoginView> imple
         });
 
     }
-
-
 }

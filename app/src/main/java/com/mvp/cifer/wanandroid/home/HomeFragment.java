@@ -173,6 +173,7 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePr
         banner.setImages(images);
         //设置banner动画效果
         banner.setBannerTitles(titles);
+
         banner.setBannerAnimation(Transformer.DepthPage);
         //设置自动轮播，默认为true
         banner.isAutoPlay(true);
@@ -249,7 +250,6 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePr
     @Override
     public void onCheckBoxClick(HomeBean.DataBean.ArticleBean articleBean, int position,boolean isChecked) {
         getPresenter().onLikeData(articleBean.getTitle(),articleBean.getAuthor(),articleBean.getLink(),position,isChecked);
-
     }
 
     @Override

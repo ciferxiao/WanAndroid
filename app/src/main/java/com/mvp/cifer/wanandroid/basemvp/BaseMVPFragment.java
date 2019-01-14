@@ -59,7 +59,6 @@ public abstract class BaseMVPFragment<V extends BaseView,P extends BasePresenter
         if(presenter != null){
             this.presenter.attachView(view);
         }
-
         initView();
     }
 
@@ -87,7 +86,6 @@ public abstract class BaseMVPFragment<V extends BaseView,P extends BasePresenter
         TextView reloadTv = mErrorView.findViewById(R.id.error_reload_tv);
         reloadTv.setOnClickListener(v -> reload());
         mLoadingAnimation = mLoadingView.findViewById(R.id.loading_animation);
-        Log.d("xiao333"," gone ==============");
         mErrorView.setVisibility(View.GONE);
         mLoadingView.setVisibility(View.GONE);
         mNormalView.setVisibility(View.VISIBLE);

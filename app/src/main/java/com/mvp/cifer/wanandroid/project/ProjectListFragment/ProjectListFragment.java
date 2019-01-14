@@ -54,15 +54,6 @@ public class ProjectListFragment extends Fragment{
         fragment.setArguments(bundle);
         return fragment;
     }
-/*
-    public static ProjectListFragment aaaa(){
-        Bundle bundle = new Bundle();
-        bundle.putInt("id",293);
-        ProjectListFragment fragment = new ProjectListFragment();
-        fragment.setArguments(bundle);
-        return  fragment;
-    }*/
-
 
     @Nullable
     @Override
@@ -75,19 +66,15 @@ public class ProjectListFragment extends Fragment{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.d(TAG," onActivityCreated ------------------");
         initView();
     }
 
     private int id ;
     private void initView(){
-
         Bundle bundle = getArguments();
         assert bundle != null;
         id = bundle.getInt("ID");
-
         adapter = new ProjectAdapter();
-        Log.d(TAG," initView ------------------");
 
         recyclelist.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayout.VERTICAL, false));
         recyclelist.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getActivity()), DividerItemDecoration.VERTICAL));
@@ -99,7 +86,6 @@ public class ProjectListFragment extends Fragment{
     private AppCallback<ProjectListBean> appCallback = new AppCallback<ProjectListBean>() {
         @Override
         public void Success(ProjectListBean projectListBean) {
-            Log.d("xiao111",projectListBean.getErrorMsg() + " -----------------");
             setBeanData(projectListBean);
         }
 
@@ -141,13 +127,10 @@ public class ProjectListFragment extends Fragment{
                 });
     }
 
-    ProjectListBean.DataBean dataBean;
 
     private void setBeanData(ProjectListBean projectListBean){
         if(projectListBean != null){
-            dataBean = projectListBean.getData();
-            ArrayList<ProjectListBean.DataBean.DataBeans> list = dataBean.getDatas();
-            Log.d(TAG," setBeanData ======================");
+            ArrayList<ProjectListBean.DataBean.DataBeans> list = projectListBean.getData().getDatas();
             adapter.clear();
             adapter.addAll(list);
             adapter.notifyDataSetChanged();
@@ -156,7 +139,6 @@ public class ProjectListFragment extends Fragment{
 
     @Override
     public void onDestroyView() {
-        Log.d(TAG," onDestroyView ------------------");
         super.onDestroyView();
     }
 

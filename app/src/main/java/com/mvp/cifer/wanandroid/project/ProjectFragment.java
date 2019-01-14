@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DividerItemDecoration;
@@ -42,10 +43,10 @@ import butterknife.ButterKnife;
  * - @time   :  14:22
  * - @desc   :
  */
-public class ProjectFragment extends BaseMVPFragment<ProjectContract.ProjectView,ProjectPresneter>
-            implements ProjectContract.ProjectView,ViewPager.OnPageChangeListener{
+public class ProjectFragment extends BaseMVPFragment<ProjectContract.ProjectView, ProjectPresneter>
+        implements ProjectContract.ProjectView, ViewPager.OnPageChangeListener {
 
-    public static ProjectFragment newInstance(){
+    public static ProjectFragment newInstance() {
         return new ProjectFragment();
     }
 
@@ -59,8 +60,8 @@ public class ProjectFragment extends BaseMVPFragment<ProjectContract.ProjectView
     View dividerline;
 
     @BindView(R.id.recyclelist)
-
     RecyclerView recyclelist;
+
     private TabListAdapter listadapter;
 
     private ArrayList<ProjectListFragment> fragmentList = new ArrayList<>();
@@ -73,18 +74,14 @@ public class ProjectFragment extends BaseMVPFragment<ProjectContract.ProjectView
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.project_act,container,false);
-        ButterKnife.bind(this,view);
+        View view = inflater.inflate(R.layout.project_act, container, false);
+        ButterKnife.bind(this, view);
         return view;
     }
 
     @Override
     public void initView() {
-//        super.initView();
-        getPresenter().getProjectPart();
-
-        recyclelist.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayout.HORIZONTAL,false));
+        recyclelist.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayout.HORIZONTAL, false));
         recyclelist.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getActivity()), DividerItemDecoration.VERTICAL));
 
         int focusSpacing = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, recyclelist.getResources().getDisplayMetrics());
@@ -102,61 +99,45 @@ public class ProjectFragment extends BaseMVPFragment<ProjectContract.ProjectView
         listadapter.setOnTitleClickListener(new TabListAdapter.OnTitleClickListener() {
             @Override
             public void onItemClick(ProjectBean.DataBean object, int position) {
-                listadapter.setCurrentPosition(position);
-                listadapter.notifyDataSetChanged();
-                //TODO - -- - -- - -- -
-                Log.d("xiao111"," item position = " + position);
-                viewPager.setCurrentItem(position);
-                ProjectListFragment fragment = fragmentList.get(position);
-                fragment.reload(ids.get(position));
+                if (object != null) {
+                    listadapter.setCurrentPosition(position);
+                    listadapter.notifyDataSetChanged();
+                    ProjectListFragment fragment = fragmentList.get(position);
+                    fragment.reload(ids.get(position));
+                    Log.d("xiao111"," position == " + position);
+                    viewPager.setCurrentItem(position);
+                }
             }
         });
+
         recyclelist.setAdapter(listadapter);
         recyclelist.setNestedScrollingEnabled(false);
+        getPresenter().getProjectPart();
     }
 
     private List<Integer> ids;
+
     @Override
     public void setBasicTab(List<ProjectBean.DataBean> projectBeans) {
-        if(projectBeans != null){
+        if (projectBeans != null) {
             ArrayList<String> titles = new ArrayList<>();
             ids = new ArrayList<>();
-            for(ProjectBean.DataBean bean: projectBeans){
+            for (ProjectBean.DataBean bean : projectBeans) {
                 ids.add(bean.getId());
                 titles.add(bean.getName());
-                ProjectListFragment fragment =  ProjectListFragment.getNewInstance(bean.getId());
+                ProjectListFragment fragment = ProjectListFragment.getNewInstance(bean.getId());
                 fragmentList.add(fragment);
-                //fragment.reload(bean.getId());
             }
             String[] titlestrings = new String[titles.size()];
             titles.toArray(titlestrings);
-            if(adapter == null ){
-                adapter = new ViewpagerAdapter(getChildFragmentManager(),titlestrings);
-                Log.d(ProjectListFragment.TAG," adapter +++++++++++");
-            }
+            adapter = new ViewpagerAdapter(this.getChildFragmentManager(), titlestrings);
             adapter.addFragmentList(fragmentList);
-            viewPager.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager()) {
-                @Override
-                public Fragment getItem(int i) {
-                    return fragmentList.get(i);
-                }
-
-                @Override
-                public int getCount() {
-                    return fragmentList == null? 0 : fragmentList.size();
-                }
-
-                @Nullable
-                @Override
-                public CharSequence getPageTitle(int position) {
-                    return titlestrings[position];
-                }
-            });
+            viewPager.setAdapter(adapter);
 
             listadapter.clear();
             listadapter.addAll(projectBeans);
             listadapter.notifyDataSetChanged();
-        }else{
+        } else {
             Toast.makeText(getActivity(), "请下拉刷新", Toast.LENGTH_SHORT).show();
         }
     }
@@ -196,11 +177,11 @@ public class ProjectFragment extends BaseMVPFragment<ProjectContract.ProjectView
 
     }
 
-    public static class ViewpagerAdapter extends FragmentStatePagerAdapter{
+    public static class ViewpagerAdapter extends FragmentStatePagerAdapter {
         private ArrayList<ProjectListFragment> fragments = new ArrayList<>();
         private String[] titles;
 
-        ViewpagerAdapter(FragmentManager fm,String[] titles) {
+        ViewpagerAdapter(FragmentManager fm, String[] titles) {
             super(fm);
             this.titles = titles;
         }
@@ -221,7 +202,7 @@ public class ProjectFragment extends BaseMVPFragment<ProjectContract.ProjectView
             return titles[position];
         }
 
-        void addFragmentList(ArrayList<ProjectListFragment> fragments){
+        void addFragmentList(ArrayList<ProjectListFragment> fragments) {
             this.fragments = fragments;
         }
     }
