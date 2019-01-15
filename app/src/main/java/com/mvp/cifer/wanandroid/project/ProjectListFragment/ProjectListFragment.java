@@ -1,6 +1,7 @@
 package com.mvp.cifer.wanandroid.project.ProjectListFragment;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityOptions;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,6 +23,7 @@ import com.mvp.cifer.wanandroid.R;
 import com.mvp.cifer.wanandroid.adapter.ProjectAdapter;
 import com.mvp.cifer.wanandroid.project.ProjectBean;
 import com.mvp.cifer.wanandroid.utils.AppCallback;
+import com.mvp.cifer.wanandroid.utils.CommonUtils;
 import com.mvp.cifer.wanandroid.utils.retrofitmanager.RetrofitManager;
 import com.mvp.cifer.wanandroid.utils.retrofitmanager.RxSchedulers;
 
@@ -84,8 +86,10 @@ public class ProjectListFragment extends Fragment {
 
         adapter.onItemClickListener(new ProjectAdapter.OnTitleClickListener() {
             @Override
-            public void onItemClick(ProjectBean.DataBean object, int position) {
-
+            public void onItemClick(ProjectListBean.DataBean.DataBeans object, int position,View itemView) {
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), itemView, "share_view");
+                CommonUtils.startArticleDetailActivity(getActivity(),options,0,"",
+                        object.getLink(),false,false,false);
             }
 
             @Override
@@ -96,8 +100,6 @@ public class ProjectListFragment extends Fragment {
                         .setSingleFling(true)
                         .setType(GPreviewBuilder.IndicatorType.Number)
                         .start();
-
-
             }
         });
 
@@ -121,9 +123,7 @@ public class ProjectListFragment extends Fragment {
     };
 
     public void reload(int id) {
-        if (getUserVisibleHint()) {
             initData(id, appCallback);
-        }
     }
 
     @SuppressLint("CheckResult")

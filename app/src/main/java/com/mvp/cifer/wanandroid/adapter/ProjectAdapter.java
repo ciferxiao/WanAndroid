@@ -62,11 +62,9 @@ public class ProjectAdapter extends BaseRecyclerViewAdapter<ProjectListBean.Data
 
         @SuppressLint("SetTextI18n")
         @Override
-        protected void onBindViewHolder(ProjectListBean.DataBean.DataBeans bean, int position) {
+        protected void onBindViewHolder(final ProjectListBean.DataBean.DataBeans bean, int position) {
             WanAndroidApp.getInstance().getDisplayer(itemView.getContext())
                     .normalLoad(imageview.getContext(),imageview,bean.getEnvelopePic(),0,R.drawable.ic_about);
-
-            Log.d("xiao111"," bean == " + bean.getAuthor());
 
             details.setText(bean.getDesc());
 
@@ -86,7 +84,7 @@ public class ProjectAdapter extends BaseRecyclerViewAdapter<ProjectListBean.Data
                 @Override
                 public void onClick(View v) {
                     if(listener != null){
-
+                        listener.onItemClick(bean,position,itemView);
                     }
                 }
             });
@@ -104,7 +102,7 @@ public class ProjectAdapter extends BaseRecyclerViewAdapter<ProjectListBean.Data
 
     public interface OnTitleClickListener{
 
-        void onItemClick(ProjectBean.DataBean object, int position);
+        void onItemClick(ProjectListBean.DataBean.DataBeans object, int position,View itemView);
 
         //查看大图
         void onLookBigPic(ImageView view ,String url);

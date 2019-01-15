@@ -51,7 +51,7 @@ import butterknife.ButterKnife;
  * - @desc   :
  */
 public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePresenter> implements HomeContract.IHomeView
-                            ,OnBannerListener,RecycleViewAdapter.OnItemClickListener<HomeBean.DataBean.ArticleBean>{
+        , OnBannerListener, RecycleViewAdapter.OnItemClickListener<HomeBean.DataBean.ArticleBean> {
 
     @BindView(R.id.banner)
     Banner banner;
@@ -91,12 +91,10 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePr
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         EventBus.getDefault().register(this);
-
-        View mRootView =inflater.inflate(R.layout.fragment_home, container, false);
-        ButterKnife.bind(this,mRootView);//绑定framgent
+        View mRootView = inflater.inflate(R.layout.fragment_home, container, false);
+        ButterKnife.bind(this, mRootView);//绑定framgent
         return mRootView;
     }
-
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -108,8 +106,8 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePr
         super.initView();
 
         adapter = new RecycleViewAdapter();
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL));
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
 
         adapter.setOnItemClickListener(this);
@@ -118,7 +116,7 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePr
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 pagenumber = 0;
-                getPresenter().getListData(pagenumber,true);
+                getPresenter().getListData(pagenumber, true);
                 refreshLayout.finishRefresh(1000);
             }
         });
@@ -126,7 +124,7 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePr
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                getPresenter().getListData(pagenumber,false);
+                getPresenter().getListData(pagenumber, false);
             }
         });
 
@@ -139,10 +137,10 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePr
         }
     }
 
-    private void refresh(){
+    private void refresh() {
         pagenumber = 0;
 
-        getPresenter().getListData(pagenumber,true);
+        getPresenter().getListData(pagenumber, true);
     }
 
     @Override
@@ -161,7 +159,7 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePr
     }
 
     @Override
-    public void setBannerData(@Nullable List<String> images,@Nullable List<String> titles,@Nullable List<String> url) {
+    public void setBannerData(@Nullable List<String> images, @Nullable List<String> titles, @Nullable List<String> url) {
         title = titles;
         this.url = url;
 
@@ -190,8 +188,8 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePr
 
     @Override
     public void OnBannerClick(int position) {
-        CommonUtils.startArticleDetailActivity(getActivity(),null,0,title.get(position),
-                    url.get(position),false,false,false);
+        CommonUtils.startArticleDetailActivity(getActivity(), null, 0, title.get(position),
+                url.get(position), false, false, false);
     }
 
     @Override
@@ -243,18 +241,18 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePr
     @Override
     public void onItemClick(HomeBean.DataBean.ArticleBean articleBean, int position, View view) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), view, "share_view");
-        CommonUtils.startArticleDetailActivity(getActivity(),options,0,title.get(position),
-                url.get(position),false,false,false);
+        CommonUtils.startArticleDetailActivity(getActivity(), options, 0, title.get(position),
+                url.get(position), false, false, false);
     }
 
     @Override
-    public void onCheckBoxClick(HomeBean.DataBean.ArticleBean articleBean, int position,boolean isChecked) {
-        getPresenter().onLikeData(articleBean.getTitle(),articleBean.getAuthor(),articleBean.getLink(),position,isChecked);
+    public void onCheckBoxClick(HomeBean.DataBean.ArticleBean articleBean, int position, boolean isChecked) {
+        getPresenter().onLikeData(articleBean.getTitle(), articleBean.getAuthor(), articleBean.getLink(), position, isChecked);
     }
 
     @Override
-    public void setLikeCount(int position,boolean isChecked) {
-        adapter.setLikeCount(position,isChecked);
+    public void setLikeCount(int position, boolean isChecked) {
+        adapter.setLikeCount(position, isChecked);
 
     }
 }

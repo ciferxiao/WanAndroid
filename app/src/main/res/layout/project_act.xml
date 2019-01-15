@@ -37,7 +37,7 @@
         android:background="@color/gray"
         android:visibility="invisible" />
 
-    <android.support.v4.view.ViewPager
+    <view class="com.mvp.cifer.wanandroid.project.ProjectFragment$NoScrollViewpager"
         android:id="@+id/project_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

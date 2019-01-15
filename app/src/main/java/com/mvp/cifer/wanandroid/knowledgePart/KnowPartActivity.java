@@ -112,7 +112,6 @@ public class KnowPartActivity extends AppCompatActivity implements ViewPager.OnP
     public void onPageSelected(int i) {
         fragmentList.get(i).setUserVisibleHint(true);
         fragmentList.get(i).reload(iddatas.get(i));
-
     }
 
     @Override

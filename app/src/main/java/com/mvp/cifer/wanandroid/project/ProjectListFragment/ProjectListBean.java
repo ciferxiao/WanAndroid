@@ -55,6 +55,16 @@ public class ProjectListBean extends BaseBean {
 
             private String niceDate;
 
+            private String link;
+
+            public String getLink() {
+                return link;
+            }
+
+            public void setLink(String link) {
+                this.link = link;
+            }
+
             public String getDesc() {
                 return desc;
             }
@@ -141,8 +151,8 @@ public class ProjectListBean extends BaseBean {
                 dest.writeString(this.projectLink);
                 dest.writeString(this.envelopePic);
                 dest.writeString(this.author);
+                dest.writeString(this.link);
                 dest.writeParcelable(this.mBounds,flags);
-
             }
 
             public DataBeans(){};
@@ -153,6 +163,7 @@ public class ProjectListBean extends BaseBean {
                 this.projectLink = parcel.readString();
                 this.envelopePic = parcel.readString();
                 this.author = parcel.readString();
+                this.link = parcel.readString();
                 this.mBounds = parcel.readParcelable(Rect.class.getClassLoader());
             }
 

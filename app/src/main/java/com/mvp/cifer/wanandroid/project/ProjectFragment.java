@@ -1,5 +1,6 @@
 package com.mvp.cifer.wanandroid.project;
 
+import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -51,7 +53,7 @@ public class ProjectFragment extends BaseMVPFragment<ProjectContract.ProjectView
     }
 
     @BindView(R.id.project_viewpager)
-    ViewPager viewPager;
+    NoScrollViewpager viewPager;
 
     @BindView(R.id.tabLayout)
     SlidingTabLayout slidingTabLayout;
@@ -95,6 +97,7 @@ public class ProjectFragment extends BaseMVPFragment<ProjectContract.ProjectView
         });
 
         listadapter = new TabListAdapter();
+        viewPager.setNoScroll(false);
 
         listadapter.setOnTitleClickListener(new TabListAdapter.OnTitleClickListener() {
             @Override
@@ -102,11 +105,30 @@ public class ProjectFragment extends BaseMVPFragment<ProjectContract.ProjectView
                 if (object != null) {
                     listadapter.setCurrentPosition(position);
                     listadapter.notifyDataSetChanged();
-                    ProjectListFragment fragment = fragmentList.get(position);
-                    fragment.reload(ids.get(position));
-                    Log.d("xiao111"," position == " + position);
+                    Log.d("xiao111","fragment id == " + fragmentList.get(position));
+                    fragmentList.get(position).reload(ids.get(position));
                     viewPager.setCurrentItem(position);
                 }
+            }
+        });
+
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                listadapter.setCurrentPosition(position);
+                listadapter.notifyDataSetChanged();
+                fragmentList.get(position).reload(ids.get(position));
+                viewPager.setCurrentItem(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
             }
         });
 
@@ -204,6 +226,29 @@ public class ProjectFragment extends BaseMVPFragment<ProjectContract.ProjectView
 
         void addFragmentList(ArrayList<ProjectListFragment> fragments) {
             this.fragments = fragments;
+        }
+    }
+
+    //禁止滑动的viewpager
+    public static class NoScrollViewpager extends ViewPager{
+        private boolean isScroll;
+
+        public NoScrollViewpager(@NonNull Context context) {
+            super(context);
+        }
+
+        private void setNoScroll(boolean isScroll){
+            this.isScroll = isScroll;
+        }
+
+        @Override
+        public boolean onTouchEvent(MotionEvent ev) {
+            return isScroll && super.onTouchEvent(ev);
+        }
+
+        @Override
+        public boolean onInterceptTouchEvent(MotionEvent ev) {
+            return isScroll&&super.onInterceptTouchEvent(ev);
         }
     }
 
