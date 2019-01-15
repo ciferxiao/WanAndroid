@@ -37,11 +37,10 @@
         android:background="@color/gray"
         android:visibility="invisible" />
 
-    <view class="com.mvp.cifer.wanandroid.project.ProjectFragment$NoScrollViewpager"
+    <com.mvp.cifer.wanandroid.view.NoScrollViewpager
         android:id="@+id/project_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent"/>
 
 
 </LinearLayout>

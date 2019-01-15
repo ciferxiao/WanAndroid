@@ -68,8 +68,6 @@ public class LoginActivity extends BaseActivity<LoginContract.LoginView,LoginPre
 
         ButterKnife.bind(this);
 
-
-
         login.setOnClickListener(this);
     }
 

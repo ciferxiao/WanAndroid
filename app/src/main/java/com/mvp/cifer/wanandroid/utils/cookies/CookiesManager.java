@@ -15,27 +15,27 @@ import okhttp3.HttpUrl;
 
 public class CookiesManager implements CookieJar {
 
-    private static final PersistentCookieStore COOKIE_STORE = new PersistentCookieStore();
+    private static final PersistentCookieStore cookieStore  = new PersistentCookieStore();
 
     @Override
     public void saveFromResponse(@NonNull HttpUrl url, @NonNull List<Cookie> cookies) {
         if (cookies.size() > 0) {
             for (Cookie item : cookies) {
-                COOKIE_STORE.add(url, item);
+                cookieStore .add(url, item);
             }
         }
     }
 
     @Override
     public List<Cookie> loadForRequest(@NonNull HttpUrl url) {
-        return COOKIE_STORE.get(url);
+        return cookieStore .get(url);
     }
 
     /**
      * 清除所有cookie
      */
     public static void clearAllCookies() {
-        COOKIE_STORE.removeAll();
+        cookieStore .removeAll();
     }
 
     /**
@@ -46,7 +46,7 @@ public class CookiesManager implements CookieJar {
      * @return if clear cookies
      */
     public static boolean clearCookies(HttpUrl url, Cookie cookie) {
-        return COOKIE_STORE.remove(url, cookie);
+        return cookieStore.remove(url, cookie);
     }
 
     /**
@@ -55,7 +55,7 @@ public class CookiesManager implements CookieJar {
      * @return List<Cookie>
      */
     public static List<Cookie> getCookies() {
-        return COOKIE_STORE.getCookies();
+        return cookieStore.getCookies();
     }
 
 }

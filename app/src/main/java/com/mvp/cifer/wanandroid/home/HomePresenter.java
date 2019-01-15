@@ -70,6 +70,9 @@ public class HomePresenter extends BasePresenter<HomeContract.IHomeView> impleme
 
     @Override
     public void onLikeData(String title, String author, String link,int position, boolean isCheck) {
+        if(getView() == null){
+            return;
+        }
         model.getLikeCount(title, author, link, new AppCallback<BaseBean>() {
             @Override
             public void Success(BaseBean bean) {

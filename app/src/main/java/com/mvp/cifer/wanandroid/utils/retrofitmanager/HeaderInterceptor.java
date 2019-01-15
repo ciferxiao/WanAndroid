@@ -21,7 +21,6 @@ public class HeaderInterceptor implements Interceptor{
                 .addHeader("password","xiao123")
                 .method(request.method(), request.body())
                 .build();
-
         return chain.proceed(requestBuilder);
     }
 }

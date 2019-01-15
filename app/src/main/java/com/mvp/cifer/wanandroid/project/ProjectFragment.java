@@ -30,6 +30,7 @@ import com.mvp.cifer.wanandroid.adapter.TabListAdapter;
 import com.mvp.cifer.wanandroid.basemvp.BaseActivity;
 import com.mvp.cifer.wanandroid.basemvp.BaseMVPFragment;
 import com.mvp.cifer.wanandroid.project.ProjectListFragment.ProjectListFragment;
+import com.mvp.cifer.wanandroid.view.NoScrollViewpager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -226,29 +227,6 @@ public class ProjectFragment extends BaseMVPFragment<ProjectContract.ProjectView
 
         void addFragmentList(ArrayList<ProjectListFragment> fragments) {
             this.fragments = fragments;
-        }
-    }
-
-    //禁止滑动的viewpager
-    public static class NoScrollViewpager extends ViewPager{
-        private boolean isScroll;
-
-        public NoScrollViewpager(@NonNull Context context) {
-            super(context);
-        }
-
-        private void setNoScroll(boolean isScroll){
-            this.isScroll = isScroll;
-        }
-
-        @Override
-        public boolean onTouchEvent(MotionEvent ev) {
-            return isScroll && super.onTouchEvent(ev);
-        }
-
-        @Override
-        public boolean onInterceptTouchEvent(MotionEvent ev) {
-            return isScroll&&super.onInterceptTouchEvent(ev);
         }
     }
 

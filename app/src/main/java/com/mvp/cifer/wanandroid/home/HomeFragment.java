@@ -242,7 +242,7 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePr
     public void onItemClick(HomeBean.DataBean.ArticleBean articleBean, int position, View view) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), view, "share_view");
         CommonUtils.startArticleDetailActivity(getActivity(), options, 0, title.get(position),
-                url.get(position), false, false, false);
+                articleBean.getLink(), false, false, false);
     }
 
     @Override

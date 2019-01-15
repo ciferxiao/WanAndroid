@@ -33,10 +33,9 @@
             android:layout_weight="1"
             android:background="@null"
             android:button="@null"
-            android:drawableTop="@drawable/tab_05_bg"
+            android:drawableTop="@drawable/tab_02_bg"
             android:gravity="center|bottom"
-            android:text="我的" />
-
+            android:text="知识" />
 
         <RadioButton
             android:id="@+id/tab03"
@@ -49,59 +48,6 @@
             android:drawableTop="@drawable/tab_05_bg"
             android:gravity="center|bottom"
             android:text="网站" />
-
-        <!--<RadioButton
-            android:id="@+id/tab02"
-            style="@style/TabMenuText"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_weight="1"
-            android:background="@null"
-            android:button="@null"
-            android:drawableTop="@drawable/tab_02_bg"
-            android:gravity="center|bottom"
-            android:text="客户" />
-
-        <RadioButton
-            android:id="@+id/tab03"
-            style="@style/TabMenuText"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@null"
-            android:button="@null"
-            android:drawableTop="@drawable/tab_03_bg"
-            android:gravity="center|bottom"
-            android:text="经纪圈" />
-
-        <RadioButton
-            android:id="@+id/tab04"
-            style="@style/TabMenuText"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@null"
-            android:button="@null"
-            android:drawableTop="@drawable/tab_04_bg"
-            android:gravity="center|bottom"
-            android:text="消息" />
-
-        <RadioButton
-            android:id="@+id/tab05"
-            style="@style/TabMenuText"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@null"
-            android:button="@null"
-            android:drawableTop="@drawable/tab_05_bg"
-            android:gravity="center|bottom"
-            android:text="我的" />-->
     </RadioGroup>
 
     <LinearLayout
@@ -116,40 +62,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3" />
-
-        <!--<RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <RadioButton
-                android:id="@+id/rb_msg"
-                style="@style/TabMenuText"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="@null"
-                android:button="@null"
-                android:drawableTop="@drawable/tab_04_bg"
-                android:gravity="center"
-                android:text="消息"
-                android:visibility="invisible" />
-
-            <ImageView
-                android:id="@+id/img_msg_red"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/rb_msg"
-                android:layout_marginLeft="2dp"
-                android:layout_toRightOf="@+id/rb_msg"
-                android:src="@drawable/round_orange"
-                android:visibility="gone" />
-        </RelativeLayout>-->
 
         <View
             android:layout_width="0dp"

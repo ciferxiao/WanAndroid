@@ -17,19 +17,19 @@ import com.mvp.cifer.wanandroid.utils.cookies.CookiesManager;
 public class LoginPresenter extends BasePresenter<LoginContract.LoginView> implements LoginContract.LoginPresenterInterface {
     private LoginModel model;
 
-    public LoginPresenter(){
+    public LoginPresenter() {
         model = new LoginModel();
     }
 
 
-    public void getLogin(String name,String passwd){
-        model.LoginHttp(getView().getContext(),name,passwd, new AppCallback<BaseBean>() {
+    public void getLogin(String name, String passwd) {
+        model.LoginHttp(getView().getContext(), name, passwd, new AppCallback<BaseBean>() {
             @Override
             public void Success(BaseBean bean) {
-                if(bean.getErrorCode() == 0 ){
+                if (bean.getErrorCode() == 0) {
                     getView().go();
                     CookiesManager.clearAllCookies();
-                }else{
+                } else {
                     getView().showToast(bean.getErrorMsg());
                 }
             }
