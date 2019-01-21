@@ -20,7 +20,7 @@ public class KnowledgeModel {
 
     @SuppressLint("CheckResult")
     public void getListData(final AppCallback<Knowledgebean> appcallback){
-        RetrofitManager.getInstance().getRequestService()
+        RetrofitManager.getInstance().getRequestService(false)
                 .getKnowledgeList()
                 .compose(RxSchedulers.<Knowledgebean>io_main())
                 .subscribeWith(new Observer<Knowledgebean>() {

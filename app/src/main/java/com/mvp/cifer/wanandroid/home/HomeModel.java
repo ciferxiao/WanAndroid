@@ -10,6 +10,9 @@ import com.mvp.cifer.wanandroid.utils.AppCallback;
 import com.mvp.cifer.wanandroid.utils.retrofitmanager.RetrofitManager;
 import com.mvp.cifer.wanandroid.utils.retrofitmanager.RxSchedulers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -25,7 +28,7 @@ public class HomeModel {
     @SuppressLint("CheckResult")
     public void getData(final AppCallback<HomeBannerBean> callback){
         RetrofitManager.getInstance()
-                .getRequestService()
+                .getRequestService(false)
                 .getBannerRetrofit()
                 .compose(RxSchedulers.<HomeBannerBean>io_main())
                 .subscribeWith(new Observer<HomeBannerBean>() {
@@ -54,7 +57,7 @@ public class HomeModel {
     @SuppressLint("CheckResult")
     public void getListData(int page,final AppCallback<HomeBean> callback){
         RetrofitManager.getInstance()
-                .getRequestService()
+                .getRequestService(false)
                 .getHomeArticle(page)
                 .compose(RxSchedulers.<HomeBean>io_main())
                 .subscribeWith(new Observer<HomeBean>() {
@@ -81,36 +84,9 @@ public class HomeModel {
     }
 
     @SuppressLint("CheckResult")
-    public void getLikeCount(String title, String author, String link, AppCallback appCallback){
-        RetrofitManager manager = RetrofitManager.getInstance();
-
-        manager.getRequestService()
-                .postCollection(title,author,link)
-                .compose(RxSchedulers.io_main())
-                .subscribeWith(new Observer<BaseBean>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(BaseBean baseBean) {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-
-        RetrofitManager.getInstance().getRequestService()
-                .postCollection(title,author,link)
+    public void getLikeCount(String id, AppCallback appCallback){
+        RetrofitManager.getInstance().getRequestService(false)
+                .postinnerCollection(id)
                 .compose(RxSchedulers.io_main())
                 .subscribeWith(new Observer<BaseBean>() {
                     @Override
@@ -133,6 +109,35 @@ public class HomeModel {
 
                     }
                 });
-
     }
+
+    @SuppressLint("CheckResult")
+    public void getDisLikeCount(String id, AppCallback appCallback){
+        RetrofitManager.getInstance().getRequestService(false)
+                .cancelCollectionList(id)
+                .compose(RxSchedulers.io_main())
+                .subscribeWith(new Observer<BaseBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(BaseBean baseBean) {
+                        appCallback.Success(baseBean);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        appCallback.Error(e.toString());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+
 }

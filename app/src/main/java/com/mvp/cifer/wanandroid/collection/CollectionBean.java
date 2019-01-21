@@ -1,26 +1,25 @@
-package com.mvp.cifer.wanandroid.home.bean;
+package com.mvp.cifer.wanandroid.collection;
 
 import com.mvp.cifer.wanandroid.basemvp.BaseBean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * - @author :  Xiao
- * - @date   :  2018/11/1
- * - @time   :  16:09
+ * - @date   :  2019/1/18
+ * - @time   :  15:23
  * - @desc   :
  */
-public class HomeBean  extends BaseBean{
+public class CollectionBean extends BaseBean {
     private DataBean data;
 
-    public DataBean getDataBean() {
+    public DataBean getData() {
         return data;
     }
 
-    public void setDataBean(DataBean dataBean) {
-        this.data = dataBean;
+    public void setData(DataBean data) {
+        this.data = data;
     }
 
     public static class DataBean extends BaseBean{
@@ -34,7 +33,7 @@ public class HomeBean  extends BaseBean{
 
         private int total;
 
-        private ArrayList<ArticleBean> datas;
+        private ArrayList<DataBean.ArticleBean> datas;
 
         public String getCurPage() {
             return curPage;
@@ -76,15 +75,15 @@ public class HomeBean  extends BaseBean{
             this.total = total;
         }
 
-        public ArrayList<ArticleBean> getDatas() {
+        public ArrayList<DataBean.ArticleBean> getDatas() {
             return datas;
         }
 
-        public void setDatas(ArrayList<ArticleBean> datas) {
+        public void setDatas(ArrayList<DataBean.ArticleBean> datas) {
             this.datas = datas;
         }
 
-        public static class ArticleBean implements Serializable{
+        public static class ArticleBean implements Serializable {
             private String id;
 
             private String author;
@@ -101,9 +100,6 @@ public class HomeBean  extends BaseBean{
 
             private int zan;
 
-            private String superChapterName;
-
-            private boolean collect;
 
             public String getId() {
                 return id;
@@ -111,22 +107,6 @@ public class HomeBean  extends BaseBean{
 
             public void setId(String id) {
                 this.id = id;
-            }
-
-            public boolean isCollect() {
-                return collect;
-            }
-
-            public void setCollect(boolean collect) {
-                this.collect = collect;
-            }
-
-            public String getSuperChapterName() {
-                return superChapterName;
-            }
-
-            public void setSuperChapterName(String superChapterName) {
-                this.superChapterName = superChapterName;
             }
 
             public String getAuthor() {
@@ -184,13 +164,7 @@ public class HomeBean  extends BaseBean{
             public void setZan(int zan) {
                 this.zan = zan;
             }
-
         }
-
-
-
-
     }
-
 
 }

@@ -41,7 +41,7 @@ public class LoginModel {
     @SuppressLint("CheckResult")
     public void LoginHttp(final Context context,String name , String passwd, final AppCallback<BaseBean> loginListener){
 
-        RetrofitManager.getInstance().getRequestService().postLoginRetrofit(name,passwd).compose(RxSchedulers.<LoginBean>io_main())
+        RetrofitManager.getInstance().getRequestService(true).postLoginRetrofit(name,passwd).compose(RxSchedulers.<LoginBean>io_main())
                 .subscribeWith(new DisposableObserver<LoginBean>() {
                     @Override
                     public void onNext(LoginBean bean) {

@@ -21,7 +21,7 @@ public class KnowPartModel {
 
     @SuppressLint("CheckResult")
     public void getData(int id , final AppCallback<PartBean> appCallback){
-        RetrofitManager.getInstance().getRequestService()
+        RetrofitManager.getInstance().getRequestService(false)
                 .getKnowledgePart(id)
                 .compose(RxSchedulers.<PartBean>io_main())
                 .subscribeWith(new Observer<PartBean>() {

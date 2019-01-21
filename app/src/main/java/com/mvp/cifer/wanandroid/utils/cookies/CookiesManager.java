@@ -15,7 +15,7 @@ import okhttp3.HttpUrl;
 
 public class CookiesManager implements CookieJar {
 
-    private static final PersistentCookieStore cookieStore  = new PersistentCookieStore();
+    public static final PersistentCookieStore cookieStore  = new PersistentCookieStore();
 
     @Override
     public void saveFromResponse(@NonNull HttpUrl url, @NonNull List<Cookie> cookies) {

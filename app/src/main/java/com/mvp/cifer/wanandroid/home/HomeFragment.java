@@ -146,6 +146,7 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePr
     @Override
     public void setBasicData(List<HomeBean.DataBean.ArticleBean> houseItems, boolean isRefresh) {
         if (isRefresh) {
+            Log.d("xiao111"," aaaaaaaaaaaaaaaaaaaaaaa");
             pagenumber = HttpConstants.COMMON_LIST_PAGE_FIRST_NO;
             adapter.clear();
         }
@@ -247,12 +248,17 @@ public class HomeFragment extends BaseMVPFragment<HomeContract.IHomeView, HomePr
 
     @Override
     public void onCheckBoxClick(HomeBean.DataBean.ArticleBean articleBean, int position, boolean isChecked) {
-        getPresenter().onLikeData(articleBean.getTitle(), articleBean.getAuthor(), articleBean.getLink(), position, isChecked);
+        Log.d("xiao111"," articlebean == " + articleBean.getId());
+        if(isChecked){
+            getPresenter().onDisLikeData(articleBean.getId(),position,true);
+        }else {
+            getPresenter().onLikeData(articleBean.getId(), position, false);
+        }
+
     }
 
     @Override
     public void setLikeCount(int position, boolean isChecked) {
         adapter.setLikeCount(position, isChecked);
-
     }
 }

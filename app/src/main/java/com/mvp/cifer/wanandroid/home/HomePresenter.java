@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.mvp.cifer.wanandroid.basemvp.BaseBean;
 import com.mvp.cifer.wanandroid.basemvp.BasePresenter;
+import com.mvp.cifer.wanandroid.basemvp.BaseView;
 import com.mvp.cifer.wanandroid.home.bean.HomeBannerBean;
 import com.mvp.cifer.wanandroid.home.bean.HomeBean;
 import com.mvp.cifer.wanandroid.utils.AppCallback;
@@ -54,7 +55,7 @@ public class HomePresenter extends BasePresenter<HomeContract.IHomeView> impleme
                     HomeBean.DataBean dataBean= homeBean.getDataBean();
                     List<HomeBean.DataBean.ArticleBean> lists = dataBean.getDatas();
 
-                    getView().setBasicData(lists,false);
+                    getView().setBasicData(lists,isrefresh);
 
                 }else{
                     getView().showToast(homeBean.getErrorMsg());
@@ -69,11 +70,8 @@ public class HomePresenter extends BasePresenter<HomeContract.IHomeView> impleme
     }
 
     @Override
-    public void onLikeData(String title, String author, String link,int position, boolean isCheck) {
-        if(getView() == null){
-            return;
-        }
-        model.getLikeCount(title, author, link, new AppCallback<BaseBean>() {
+    public void onLikeData(String id,int position, boolean isCheck) {
+        model.getLikeCount(id, new AppCallback<BaseBean>() {
             @Override
             public void Success(BaseBean bean) {
                 if (bean.getErrorCode() == 0){
@@ -81,12 +79,30 @@ public class HomePresenter extends BasePresenter<HomeContract.IHomeView> impleme
                 }else{
                     getView().showToast(bean.getErrorMsg());
                 }
-
             }
 
             @Override
             public void Error(String error) {
+                getView().showToast(error);
+            }
+        });
+    }
 
+    @Override
+    public void onDisLikeData(String id, int position, boolean isCheck) {
+        model.getDisLikeCount(id, new AppCallback<BaseBean>() {
+            @Override
+            public void Success(BaseBean bean) {
+                if (bean.getErrorCode() == 0){
+                    getView().setLikeCount(position,isCheck);
+                }else{
+                    getView().showToast(bean.getErrorMsg());
+                }
+            }
+
+            @Override
+            public void Error(String error) {
+                getView().showToast(error);
             }
         });
 

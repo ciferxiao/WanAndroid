@@ -128,7 +128,7 @@ public class ProjectListFragment extends Fragment {
 
     @SuppressLint("CheckResult")
     private void initData(int id, AppCallback<ProjectListBean> callback) {
-        RetrofitManager.getInstance().getRequestService()
+        RetrofitManager.getInstance().getRequestService(false)
                 .getProjectList(id)
                 .compose(RxSchedulers.io_main())
                 .subscribeWith(new Observer<ProjectListBean>() {

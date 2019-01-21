@@ -19,7 +19,7 @@ public class ProjectModel {
 
     @SuppressLint("CheckResult")
     public void getProjectPart(AppCallback<ProjectBean> appCallback){
-        RetrofitManager.getInstance().getRequestService()
+        RetrofitManager.getInstance().getRequestService(false)
                 .getProjectPart()
                 .compose(RxSchedulers.io_main())
                 .subscribeWith(new Observer<ProjectBean>() {

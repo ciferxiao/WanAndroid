@@ -1,11 +1,15 @@
 package com.mvp.cifer.wanandroid.utils.retrofitmanager;
 
+import android.content.Context;
 import android.util.Log;
+
+import com.mvp.cifer.wanandroid.app.WanAndroidApp;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.HashSet;
 
 import okhttp3.FormBody;
 import okhttp3.Interceptor;

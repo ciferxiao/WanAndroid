@@ -63,4 +63,8 @@ dependencies {
     implementation 'com.just.agentweb:agentweb:4.0.2' // (必选)
     implementation 'com.just.agentweb:filechooser:4.0.2'// (可选)
     implementation project(path: ':libImagepicker')
+
+    implementation 'com.alibaba:fastjson:1.2.10'
+
+    implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
 }

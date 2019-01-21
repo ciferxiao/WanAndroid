@@ -2,6 +2,7 @@ package com.mvp.cifer.wanandroid.utils.retrofitmanager;
 
 import com.mvp.cifer.wanandroid.Login.retrofit.LoginBean;
 import com.mvp.cifer.wanandroid.basemvp.BaseBean;
+import com.mvp.cifer.wanandroid.collection.CollectionBean;
 import com.mvp.cifer.wanandroid.home.bean.HomeBannerBean;
 import com.mvp.cifer.wanandroid.home.bean.HomeBean;
 import com.mvp.cifer.wanandroid.knowledge.bean.Knowledgebean;
@@ -9,10 +10,13 @@ import com.mvp.cifer.wanandroid.knowledgePart.PartBean;
 import com.mvp.cifer.wanandroid.project.ProjectBean;
 import com.mvp.cifer.wanandroid.project.ProjectListFragment.ProjectListBean;
 
+import java.util.Map;
+
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HeaderMap;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -49,15 +53,27 @@ public interface ApiService {
     @GET("article/list/0/json")//http://www.wanandroid.com/article/list/0/json?cid=60
     Observable<PartBean> getKnowledgePart(@Query("cid") int id);
 
-    //收藏接口post
-    @POST("lg/collect/add/json")
-    @FormUrlEncoded
-    Observable<BaseBean> postCollection(@Field("title") String title, @Field("author")String author, @Field("link")String link);
-
     @GET("project/tree/json")
     Observable<ProjectBean> getProjectPart();
 
     @GET("project/list/1/json")
     Observable<ProjectListBean> getProjectList(@Query("cid") int id);
+
+    //收藏站内纹章接口post
+    @POST("lg/collect/{id}/json")
+    Observable<BaseBean> postinnerCollection(@Path("id") String id);
+
+    //取消收藏纹章接口:文章列表
+    @POST("lg/uncollect_originId/{id}/json")
+    Observable<BaseBean> cancelCollectionList(@Path("id")String id);
+
+    //收藏站外纹章接口post
+    @POST("lg/collect/add/json")
+    @FormUrlEncoded
+    Observable<BaseBean> postoutCollection(@Field("title") String title, @Field("author")String author, @Field("link")String link);
+
+    //收藏纹章列表
+    @GET("lg/collect/usertools/json")
+    Observable<CollectionBean> getCollecitonList();
 
 }

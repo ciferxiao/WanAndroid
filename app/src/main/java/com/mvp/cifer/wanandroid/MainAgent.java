@@ -22,6 +22,7 @@ import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.mvp.cifer.wanandroid.collection.CollectionActivity;
 import com.mvp.cifer.wanandroid.home.HomeFragment;
 import com.mvp.cifer.wanandroid.knowledge.KnowledgeFragment;
 import com.mvp.cifer.wanandroid.project.ProjectFragment;
@@ -97,9 +98,11 @@ public class MainAgent extends FragmentActivity implements ViewPager.OnPageChang
                 //ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this,menuItem.getActionView(), "share_view");
                 CommonUtils.startArticleDetailActivity
                         (this,null,0,"",url,false,false,false);
-
                 return true;
             case R.id.nav_item_logout:
+                return true;
+            case R.id.nav_item_my_collect:
+                CollectionActivity.openActivity(this);
                 return true;
         }
         return true;

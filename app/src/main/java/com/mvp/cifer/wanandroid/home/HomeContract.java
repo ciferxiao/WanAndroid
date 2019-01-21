@@ -31,7 +31,9 @@ public class HomeContract  {
 
         void getListData(int pageNum,boolean isrefresh);
 
-        void onLikeData(String title,String author,String link,int position,boolean isCheck);
+        void onLikeData(String id,int position,boolean isCheck);
+
+        void onDisLikeData(String id,int position,boolean isCheck);
     }
 
 }

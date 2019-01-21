@@ -1,4 +1,4 @@
-package com.mvp.cifer.wanandroid.adapter;
+package com.mvp.cifer.wanandroid.collection;
 
 import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
@@ -12,19 +12,18 @@ import android.widget.TextView;
 import com.mvp.cifer.wanandroid.R;
 import com.mvp.cifer.wanandroid.basemvp.BaseRecyclerViewAdapter;
 import com.mvp.cifer.wanandroid.basemvp.BaseRecyclerViewHolder;
-import com.mvp.cifer.wanandroid.home.bean.HomeBean;
 
 import butterknife.ButterKnife;
 
 /**
  * - @author :  Xiao
- * - @date   :  2018/11/6
- * - @time   :  14:03
+ * - @date   :  2019/1/18
+ * - @time   :  15:28
  * - @desc   :
  */
-public class RecycleViewAdapter extends BaseRecyclerViewAdapter<HomeBean.DataBean.ArticleBean>{
+public class CollectionAdapter extends BaseRecyclerViewAdapter<CollectionBean.DataBean.ArticleBean> {
 
-    private OnItemClickListener<HomeBean.DataBean.ArticleBean> listener;
+    private OnItemClickListener<CollectionBean.DataBean.ArticleBean> listener;
 
     public void setOnItemClickListener(OnItemClickListener itemClickListener){
         this.listener = itemClickListener;
@@ -34,7 +33,7 @@ public class RecycleViewAdapter extends BaseRecyclerViewAdapter<HomeBean.DataBea
     @Override
     public BaseRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         ButterKnife.bind(this, viewGroup);
-        return new ArticleListViewHolder(viewGroup, R.layout.article_item);
+        return new CollectionArticleListViewHolder(viewGroup, R.layout.article_item);
     }
 
     @Override
@@ -42,7 +41,7 @@ public class RecycleViewAdapter extends BaseRecyclerViewAdapter<HomeBean.DataBea
         super.onBindViewHolder(holder, position);
     }
 
-    class ArticleListViewHolder extends BaseRecyclerViewHolder<HomeBean.DataBean.ArticleBean>{
+    class CollectionArticleListViewHolder extends BaseRecyclerViewHolder<CollectionBean.DataBean.ArticleBean>{
         private TextView title;
         private TextView author;
         private TextView chapter;
@@ -51,8 +50,7 @@ public class RecycleViewAdapter extends BaseRecyclerViewAdapter<HomeBean.DataBea
 
         private ImageView lab;
 
-
-        ArticleListViewHolder(ViewGroup viewGroup, int layoutId) {
+        CollectionArticleListViewHolder(ViewGroup viewGroup, int layoutId) {
             super(viewGroup, layoutId);
             title = itemView.findViewById(R.id.titleView);
             author = itemView.findViewById(R.id.author);
@@ -64,9 +62,9 @@ public class RecycleViewAdapter extends BaseRecyclerViewAdapter<HomeBean.DataBea
 
         @SuppressLint("SetTextI18n")
         @Override
-        protected void onBindViewHolder(final HomeBean.DataBean.ArticleBean object,final  int position) {
+        protected void onBindViewHolder(final CollectionBean.DataBean.ArticleBean object,final  int position) {
 
-            chapter.setText(object.getChapterName() + "/" + object.getSuperChapterName());
+            chapter.setText(object.getChapterName());
 
             if(object.getNiceDate()!= null){
                 time.setText(object.getNiceDate());//可对次判断加标签
@@ -80,14 +78,8 @@ public class RecycleViewAdapter extends BaseRecyclerViewAdapter<HomeBean.DataBea
 
             like.setText("（" + object.getZan() + "）");
 
+            like.setChecked(true);
 
-            if(object.isCollect()){
-                like.setChecked(true);
-            }else{
-                like.setChecked(false);
-            }
-
-            Log.d("xiao111"," is collect == " + object.isCollect() + " " + position);
 
             title.setText(object.getTitle());
             title.setText(object.getTitle());
@@ -111,20 +103,6 @@ public class RecycleViewAdapter extends BaseRecyclerViewAdapter<HomeBean.DataBea
             });
         }
     }
-
-    public void setLikeCount(int position,boolean isChecked){
-        HomeBean.DataBean.ArticleBean bean = data.get(position);
-
-        if (isChecked){
-            bean.setCollect(true);
-            bean.setZan(bean.getZan()+1);
-        }else{
-            bean.setCollect(false);
-            bean.setZan(bean.getZan()-1);
-        }
-        notifyItemChanged(position);
-    }
-
 
     public interface OnItemClickListener<T>{
 
