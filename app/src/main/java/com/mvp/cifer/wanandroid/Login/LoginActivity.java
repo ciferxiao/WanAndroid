@@ -40,6 +40,10 @@ public class LoginActivity extends BaseActivity<LoginContract.LoginView,LoginPre
     @BindView(R.id.btnGoLogin)
     TextView login;
 
+    public static void openLoginActivity(Context context){
+        Intent intent = new Intent(context,LoginActivity.class);
+        context.startActivity(intent);
+    }
 
     @Override
     protected LoginContract.LoginView createView() {

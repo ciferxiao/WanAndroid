@@ -1,5 +1,6 @@
 package com.mvp.cifer.wanandroid;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,11 +23,16 @@ import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.mvp.cifer.wanandroid.Login.LoginActivity;
+import com.mvp.cifer.wanandroid.basemvp.BaseBean;
 import com.mvp.cifer.wanandroid.collection.CollectionActivity;
 import com.mvp.cifer.wanandroid.home.HomeFragment;
 import com.mvp.cifer.wanandroid.knowledge.KnowledgeFragment;
 import com.mvp.cifer.wanandroid.project.ProjectFragment;
+import com.mvp.cifer.wanandroid.utils.AppCallback;
 import com.mvp.cifer.wanandroid.utils.CommonUtils;
+import com.mvp.cifer.wanandroid.utils.retrofitmanager.RetrofitManager;
+import com.mvp.cifer.wanandroid.utils.retrofitmanager.RxSchedulers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +41,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * - @author :  Xiao
@@ -98,15 +106,59 @@ public class MainAgent extends FragmentActivity implements ViewPager.OnPageChang
                 //ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this,menuItem.getActionView(), "share_view");
                 CommonUtils.startArticleDetailActivity
                         (this,null,0,"",url,false,false,false);
-                return true;
+                break;
             case R.id.nav_item_logout:
-                return true;
+                logOut();
+                break;
             case R.id.nav_item_my_collect:
                 CollectionActivity.openActivity(this);
-                return true;
+                break;
         }
         return true;
     }
+
+    @SuppressLint("CheckResult")
+    private void logOut(){
+        RetrofitManager.getInstance().getRequestService(false).getLogOut()
+                .compose(RxSchedulers.<BaseBean>io_main())
+                .subscribeWith(new Observer<BaseBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(BaseBean baseBean) {
+                        callback.Success(baseBean);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.Error(e.toString());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    AppCallback<BaseBean> callback = new AppCallback<BaseBean>() {
+        @Override
+        public void Success(BaseBean baseBean) {
+            if(baseBean.getErrorCode() == 0){
+                LoginActivity.openLoginActivity(MainAgent.this);
+                Toast.makeText(MainAgent.this, "确认退出", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        public void Error(String error) {
+            Toast.makeText(MainAgent.this, error, Toast.LENGTH_SHORT).show();
+        }
+    };
+
 
     @Override
     public void onPageScrolled(int i, float v, int i1) {

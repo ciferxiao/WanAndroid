@@ -25,7 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * - @time   :  10:30
  * - @desc   :  retrofit 封装二号
  */
-public class RetrofitManager  {
+public class RetrofitManager {
     private static RetrofitManager mInstance;
     private static final long DEFAULT_TIMEOUT = 60L;
     private Retrofit retrofit = null;
@@ -68,8 +68,8 @@ public class RetrofitManager  {
                     }else{*/
                     ClearableCookieJar cookieJar =
                             new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(WanAndroidApp.getInstance()));
-                         mClient = new OkHttpClient.Builder()
-                                //添加公告查询参数
+                    mClient = new OkHttpClient.Builder()
+                            //添加公告查询参数
 //                          .addInterceptor(new CommonQueryParamsInterceptor())
 //                          .addInterceptor(new MutiBaseUrlInterceptor())
 //                          添加离线缓存
@@ -77,14 +77,14 @@ public class RetrofitManager  {
 //                          .addInterceptor(new CacheInterceptor())
 //                          .addNetworkInterceptor(new CacheInterceptor())//必须要有，否则会返回504
 
-                                .addInterceptor(new LoggingInterceptor())
-                                //.addInterceptor(new CookieInterceptor())//非首次读取cookie
-                                //.addInterceptor(new HeaderInterceptor())
-                                 .cookieJar(cookieJar)
-                                .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
-                                .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
-                                .readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
-                                .build();
+                            .addInterceptor(new LoggingInterceptor())
+                            //.addInterceptor(new CookieInterceptor())//非首次读取cookie
+                            //.addInterceptor(new HeaderInterceptor())
+                            .cookieJar(cookieJar)
+                            .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+                            .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+                            .readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+                            .build();
                     //}
 
                     retrofit = new Retrofit.Builder()
@@ -102,7 +102,6 @@ public class RetrofitManager  {
     public ApiService getRequestService(boolean isLogin) {
         return getRetrofit(isLogin).create(ApiService.class);
     }
-
 
 
 }

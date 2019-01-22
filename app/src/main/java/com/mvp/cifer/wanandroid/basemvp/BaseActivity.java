@@ -29,8 +29,6 @@ public abstract class BaseActivity<V extends BaseView,P extends BasePresenter> e
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
         if(this.presenter == null){
             this.presenter = createPresenter();
         }

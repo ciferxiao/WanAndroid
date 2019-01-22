@@ -76,4 +76,8 @@ public interface ApiService {
     @GET("lg/collect/usertools/json")
     Observable<CollectionBean> getCollecitonList();
 
+    //退出登录
+    @GET("user/logout/json")
+    Observable<BaseBean> getLogOut();
+
 }

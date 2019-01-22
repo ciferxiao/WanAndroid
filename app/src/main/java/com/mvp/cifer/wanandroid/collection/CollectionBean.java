@@ -1,5 +1,7 @@
 package com.mvp.cifer.wanandroid.collection;
 
+import android.provider.ContactsContract;
+
 import com.mvp.cifer.wanandroid.basemvp.BaseBean;
 
 import java.io.Serializable;
@@ -12,13 +14,13 @@ import java.util.ArrayList;
  * - @desc   :
  */
 public class CollectionBean extends BaseBean {
-    private DataBean data;
+    private ArrayList<DataBean> data;
 
-    public DataBean getData() {
+    public ArrayList<DataBean> getData() {
         return data;
     }
 
-    public void setData(DataBean data) {
+    public void setData(ArrayList<DataBean> data) {
         this.data = data;
     }
 
