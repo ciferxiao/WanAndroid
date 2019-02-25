@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mvp.cifer.wanandroid.BuildConfig;
 import com.mvp.cifer.wanandroid.MainAgent;
 import com.mvp.cifer.wanandroid.R;
 import com.mvp.cifer.wanandroid.basemvp.BaseActivity;
@@ -71,6 +72,14 @@ public class LoginActivity extends BaseActivity<LoginContract.LoginView,LoginPre
         setContentView(R.layout.login_act);
 
         ButterKnife.bind(this);
+
+        /*
+         * 可以根据build.gradle中的productflavors 配置不同BASEIPTYPE
+         * 满足不同环境项目需求
+         * 比如网络 13 105 ..
+         */
+        Log.d("xiao333"," Build type == " + BuildConfig.BUILD_TYPE);
+        Log.d("xiao333"," Build type int == " + BuildConfig.BASEIPTYPE);
 
         login.setOnClickListener(this);
     }

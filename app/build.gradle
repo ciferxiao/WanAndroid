@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 
-
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -11,6 +10,7 @@ android {
         versionName rootProject.ext.android["versionName"]
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        flavorDimensions "versionCode"
     }
     buildTypes {
         release {
@@ -22,6 +22,24 @@ android {
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }
+
+
+    productFlavors{
+        WanAndroidTest {
+            buildConfigField("int", "BASEIPTYPE", "0")
+        }
+
+        WanAndroidUse{
+            buildConfigField("int", "BASEIPTYPE", "1")
+        }
+
+        WanAndroidHehe{
+            buildConfigField("int", "BASEIPTYPE", "2")
+
+        }
+
+    }
+
 }
 
 dependencies {

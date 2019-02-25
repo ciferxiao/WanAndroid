@@ -1,15 +1,12 @@
 def supportVersion = "27.1.1"
 
 ext {
-
     android = [
-
             compileSdkVersion: 28,
             minSdkVersion    : 21,
             targetSdkVersion : 28,
             versionCode      : 1,
             versionName      : "1.0"
-
     ]
 
     dependencies = [
