@@ -100,7 +100,7 @@ public class LoginActivity extends BaseActivity<LoginContract.LoginView,LoginPre
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnGoLogin:
-                getPresenter().getLogin(Objects.requireNonNull(nametext.getText()).toString(), Objects.requireNonNull(passwdtext.getText()).toString());
+                getPresenter().getLoginB(Objects.requireNonNull(nametext.getText()).toString(), Objects.requireNonNull(passwdtext.getText()).toString());
                 break;
         }
     }

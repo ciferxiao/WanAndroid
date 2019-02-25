@@ -20,7 +20,8 @@ public class LoginContract  {
     }
 
     interface LoginPresenterInterface {
-        void getLogin(String name,String passwd);
+
+        void getLoginB(String name,String passwd);
 
     }
 }

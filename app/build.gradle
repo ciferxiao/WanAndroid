@@ -12,10 +12,27 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         flavorDimensions "versionCode"
     }
+
+    signingConfigs {
+        release{
+            keyAlias KEY_ALIAS
+            keyPassword KEY_PASSWORD
+            storeFile rootProject.file(KEYSTORE_FILE)
+            storePassword KEYSTORE_PASSWORD
+        }
+    }
+
     buildTypes {
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.release
+
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {

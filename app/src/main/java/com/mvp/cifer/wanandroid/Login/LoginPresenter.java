@@ -1,5 +1,7 @@
 package com.mvp.cifer.wanandroid.Login;
 
+import android.annotation.SuppressLint;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.mvp.cifer.wanandroid.Login.retrofit.LoginBean;
@@ -7,6 +9,10 @@ import com.mvp.cifer.wanandroid.basemvp.BaseBean;
 import com.mvp.cifer.wanandroid.basemvp.BasePresenter;
 import com.mvp.cifer.wanandroid.utils.AppCallback;
 import com.mvp.cifer.wanandroid.utils.cookies.CookiesManager;
+import com.mvp.cifer.wanandroid.utils.retrofitmanager.RetrofitManager;
+import com.mvp.cifer.wanandroid.utils.retrofitmanager.RxSchedulers;
+
+import io.reactivex.observers.DisposableObserver;
 
 /**
  * - @author :  Xiao
@@ -15,30 +21,42 @@ import com.mvp.cifer.wanandroid.utils.cookies.CookiesManager;
  * - @desc   :
  */
 public class LoginPresenter extends BasePresenter<LoginContract.LoginView> implements LoginContract.LoginPresenterInterface {
-    private LoginModel model;
+/*
+    @Override
+    public void getLogin(String name, String passwd) {}
+*/
 
-    public LoginPresenter() {
-        model = new LoginModel();
+
+    @SuppressLint("CheckResult")
+    @Override
+    public void getLoginB(String name , String passwd){
+        RetrofitManager.getInstance()
+                .getRequestService(true)
+                .postLoginRetrofit(name,passwd).compose(RxSchedulers.<LoginBean>io_main())
+                .subscribeWith(new DisposableObserver<LoginBean>() {
+                    @Override
+                    public void onNext(LoginBean bean) {
+                        Log.d("TAG"," error code = " + bean.getErrorCode());
+                        Log.d("TAG"," error Message = " + bean.getErrorMsg());
+                        if (bean.getErrorCode() == 0) {
+                            getView().go();
+                            CookiesManager.clearAllCookies();
+                        } else {
+                            getView().showToast(bean.getErrorMsg());
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().showToast(e.toString());
+                    }
+
+                });
     }
 
-
-    public void getLogin(String name, String passwd) {
-        model.LoginHttp(getView().getContext(), name, passwd, new AppCallback<BaseBean>() {
-            @Override
-            public void Success(BaseBean bean) {
-                if (bean.getErrorCode() == 0) {
-                    getView().go();
-                    CookiesManager.clearAllCookies();
-                } else {
-                    getView().showToast(bean.getErrorMsg());
-                }
-            }
-
-            @Override
-            public void Error(String error) {
-                getView().showToast(error);
-            }
-        });
-
-    }
 }
