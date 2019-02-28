@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/dp_8"
+    android:paddingRight="@dimen/dp_10">
+
+
+    <LinearLayout
+        android:id="@+id/tag_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bg_round_flow_layout_item"
+        android:paddingLeft="@dimen/dp_6"
+        android:paddingTop="@dimen/dp_3"
+        android:paddingRight="@dimen/dp_6"
+        android:paddingBottom="@dimen/dp_3">
+
+        <TextView
+            android:id="@+id/tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="楼盘A"
+            android:textColor="#FF666666"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/flow_del"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="-7dp"
+        android:layout_toRightOf="@+id/tag_layout"
+        android:src="@drawable/flow_del" />
+
+
+</RelativeLayout>

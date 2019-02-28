@@ -91,8 +91,9 @@ public class LoginActivity extends BaseActivity<LoginContract.LoginView,LoginPre
 
     @Override
     public void go() {
-        Intent intent = new Intent(this, MainAgent.class);
-        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        /*Intent intent = new Intent(this, MainAgent.class);
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());*/
+        MainAgent.openMainAgent(this);
         this.finish();
     }
 

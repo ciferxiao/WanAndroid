@@ -1,7 +1,9 @@
 package com.mvp.cifer.wanandroid;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,9 +22,12 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.lzy.imagepicker.util.Utils;
 import com.mvp.cifer.wanandroid.Login.LoginActivity;
 import com.mvp.cifer.wanandroid.basemvp.BaseBean;
 import com.mvp.cifer.wanandroid.collection.CollectionActivity;
@@ -33,6 +38,7 @@ import com.mvp.cifer.wanandroid.utils.AppCallback;
 import com.mvp.cifer.wanandroid.utils.CommonUtils;
 import com.mvp.cifer.wanandroid.utils.retrofitmanager.RetrofitManager;
 import com.mvp.cifer.wanandroid.utils.retrofitmanager.RxSchedulers;
+import com.wuhenzhizao.titlebar.widget.CommonTitleBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,12 +76,17 @@ public class MainAgent extends FragmentActivity implements ViewPager.OnPageChang
     @BindView(R.id.dl_content)
     DrawerLayout dlContent;
 
+    public static void openMainAgent(Activity activity){
+        Intent intent = new Intent(activity,MainAgent.class);
+        activity.startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(activity).toBundle());
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //转场动画
-        getWindow().setEnterTransition(new Fade().setDuration(2000));
-        getWindow().setExitTransition(new Fade().setDuration(2000));
+        getWindow().setEnterTransition(new Fade().setDuration(200));
+        getWindow().setExitTransition(new Fade().setDuration(200));
 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
@@ -91,7 +102,6 @@ public class MainAgent extends FragmentActivity implements ViewPager.OnPageChang
         viewPager.addOnPageChangeListener(this);
         viewPager.setOffscreenPageLimit(3);
         nv_menu.setNavigationItemSelectedListener(this);
-
     }
 
     @Override
@@ -99,11 +109,11 @@ public class MainAgent extends FragmentActivity implements ViewPager.OnPageChang
         switch (menuItem.getItemId()){
             case R.id.nav_item_setting:
 
+
                 break;
             case R.id.nav_item_about_us:
                 dlContent.closeDrawers();
                 String url = "http://wanandroid.com/index";
-                //ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this,menuItem.getActionView(), "share_view");
                 CommonUtils.startArticleDetailActivity
                         (this,null,0,"",url,false,false,false);
                 break;
